@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "plain_ae_raw_z",
+  "label": "PlainAE RawZ",
+  "family": "Action (AE / PCA)",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "action"
+  ],
+  "points_files": {
+    "action": "points_action.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "action": {
+      "checkpoint": "/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_z32_fh128_dh512/checkpoint-step-20000",
+      "model_sha256": "5d72c77be034fe4d3f4fc459ffdde72a721a46f5d1382e478be3edf038b2bc1d",
+      "regenerated_targets": "/home/ext_minje/groot_robocasa-kitchen/t-sne/cache/regenerated/plain_ae_bs7200/targets.pt",
+      "regenerated_targets_sha256": "842451dd99f9e0e369fe2970677e055da8aa9daae9eb10ef18786117bb079f34",
+      "oracle_targets": "/home/ext_minje/groot_robocasa-kitchen/offline test/relvae_matrix_oracle_v1/models/flat_ae_z32_fh128_dh512/targets/targets.pt",
+      "oracle_targets_sha256": "24362cfd9f2d278fe2c155b7b2c363a528fc5fa2382305ce4d94f39d480e336d",
+      "fresh_extraction_max_abs_error": 5.5789947509765625e-05,
+      "fresh_extraction_tolerance": 0.0001,
+      "published_tensor": "frozen offline-oracle tensor",
+      "inference_batch_size": 7200,
+      "tensor": "raw_z",
+      "action_only": true,
+      "points": 7200,
+      "dimension": 32,
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "feature_sha256": "9aad796db7c87a8a7ffbb01d8ea8705bf968888efd64538b5f917b27cd7e9251"
+    }
+  }
+}

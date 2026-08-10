@@ -35,6 +35,11 @@ RUNS = {
     "rkd_raw_mu_angle_only_060000": {"label": "RKD RawMu Angle Only 60K", "family": "RoboCasa-Kitchen Ckpt", "features": ["processed"]},
     "timewarp_vae_raw_mu": {"label": "TimewarpVAE RawMu", "family": "Action (TimewarpVAE)", "features": ["action"]},
     "timewarp_vae_unit_mu": {"label": "TimewarpVAE UnitMu", "family": "Action (TimewarpVAE)", "features": ["action"]},
+    "plain_ae_raw_z": {"label": "PlainAE RawZ", "family": "Action (AE / PCA)", "features": ["action"]},
+    "plain_ae_unit_z": {"label": "PlainAE UnitZ", "family": "Action (AE / PCA)", "features": ["action"]},
+    "flat_ae_dtw_w0p1_raw_z": {"label": "FlatAE-DTW lambda=0.1 RawZ", "family": "Action (AE / PCA)", "features": ["action"]},
+    "flat_ae_dtw_w0p1_unit_z": {"label": "FlatAE-DTW lambda=0.1 UnitZ", "family": "Action (AE / PCA)", "features": ["action"]},
+    "pca32_action": {"label": "PCA32 Normalized Action", "family": "Action (AE / PCA)", "features": ["action"]},
 }
 
 

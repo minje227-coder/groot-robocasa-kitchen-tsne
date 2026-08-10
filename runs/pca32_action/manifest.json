@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "id": "pca32_action",
+  "label": "PCA32 Normalized Action",
+  "family": "Action (AE / PCA)",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "action"
+  ],
+  "points_files": {
+    "action": "points_action.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "action": {
+      "artifact": "/home/ext_minje/groot_robocasa-kitchen/offline test/v2/action_geometry_oracle/pilot_fold0/representation/pca32.pt",
+      "artifact_sha256": "a96a057de197fb589ed3694a1afceb69e166c372cf98eb7d41f9b0178e537285",
+      "targets": "/home/ext_minje/groot_robocasa-kitchen/offline test/vae_oracle/frozen_vae_v1/targets.pt",
+      "targets_sha256": "26a13ba5004fa7a77d43a37e72eec509797f1684c1dfc02b263199ec0a284aa5",
+      "input": "normalized_target.flatten(1)",
+      "tensor": "pca32",
+      "pca_contract": {
+        "input": "normalized_target.flatten(1), 192D",
+        "fit_folds": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "excluded_validation_fold": 1,
+        "excluded_test_fold": 0,
+        "fit_rows": 5760,
+        "centered": true,
+        "whitened": false,
+        "dimension": 32,
+        "explained_variance_ratio": 0.9605308298471577,
+        "orthogonality_max_abs_error": 2.384185791015625e-07
+      },
+      "action_only": true,
+      "points": 7200,
+      "dimension": 32,
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "feature_sha256": "5d26b37a8ece9ae63738ea7db0fd47f9f678ec4fbcc7b2fd1dd29fce953a9a1a"
+    }
+  }
+}

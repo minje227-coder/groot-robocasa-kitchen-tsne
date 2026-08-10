@@ -2,7 +2,8 @@
   "version": 2,
   "families": [
     "RoboCasa-Kitchen Ckpt",
-    "Action (TimewarpVAE)"
+    "Action (TimewarpVAE)",
+    "Action (AE / PCA)"
   ],
   "runs": [
     {
@@ -81,6 +82,56 @@
       "family": "Action (TimewarpVAE)",
       "label": "TimewarpVAE UnitMu",
       "path": "runs/timewarp_vae_unit_mu",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "action"
+      ]
+    },
+    {
+      "id": "plain_ae_raw_z",
+      "family": "Action (AE / PCA)",
+      "label": "PlainAE RawZ",
+      "path": "runs/plain_ae_raw_z",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "action"
+      ]
+    },
+    {
+      "id": "plain_ae_unit_z",
+      "family": "Action (AE / PCA)",
+      "label": "PlainAE UnitZ",
+      "path": "runs/plain_ae_unit_z",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "action"
+      ]
+    },
+    {
+      "id": "flat_ae_dtw_w0p1_raw_z",
+      "family": "Action (AE / PCA)",
+      "label": "FlatAE-DTW lambda=0.1 RawZ",
+      "path": "runs/flat_ae_dtw_w0p1_raw_z",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "action"
+      ]
+    },
+    {
+      "id": "flat_ae_dtw_w0p1_unit_z",
+      "family": "Action (AE / PCA)",
+      "label": "FlatAE-DTW lambda=0.1 UnitZ",
+      "path": "runs/flat_ae_dtw_w0p1_unit_z",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "action"
+      ]
+    },
+    {
+      "id": "pca32_action",
+      "family": "Action (AE / PCA)",
+      "label": "PCA32 Normalized Action",
+      "path": "runs/pca32_action",
       "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "action"

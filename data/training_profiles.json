@@ -318,6 +318,131 @@
       "sources": [
         "/home/ext_minje/groot_robocasa-kitchen/offline test/vae_oracle/frozen_vae_v1/targets.pt"
       ]
+    },
+    "plain_ae_raw_z": {
+      "facts": [
+        [
+          "Model",
+          "PlainAE (Flat encoder)"
+        ],
+        [
+          "Geometry loss",
+          "none"
+        ],
+        [
+          "Latent",
+          "raw z / 32D"
+        ],
+        [
+          "Published feature",
+          "action only"
+        ]
+      ],
+      "phases": [],
+      "source_label": "frozen Rel-AE checkpoint",
+      "sources": [
+        "/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_z32_fh128_dh512/checkpoint-step-20000"
+      ]
+    },
+    "plain_ae_unit_z": {
+      "facts": [
+        [
+          "Model",
+          "PlainAE (Flat encoder)"
+        ],
+        [
+          "Geometry loss",
+          "none"
+        ],
+        [
+          "Latent",
+          "L2-normalized z / 32D"
+        ],
+        [
+          "Published feature",
+          "action only"
+        ]
+      ],
+      "phases": [],
+      "source_label": "frozen Rel-AE checkpoint",
+      "sources": [
+        "/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_z32_fh128_dh512/checkpoint-step-20000"
+      ]
+    },
+    "flat_ae_dtw_w0p1_raw_z": {
+      "facts": [
+        [
+          "Model",
+          "FlatAE-DTW"
+        ],
+        [
+          "DTW-Sammon weight",
+          "0.1"
+        ],
+        [
+          "Latent",
+          "raw z / 32D"
+        ],
+        [
+          "Published feature",
+          "action only"
+        ]
+      ],
+      "phases": [],
+      "source_label": "frozen Rel-AE checkpoint",
+      "sources": [
+        "/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_dtw_z32_repraw_z_fh128_dh512_gw0p1/checkpoint-step-20000"
+      ]
+    },
+    "flat_ae_dtw_w0p1_unit_z": {
+      "facts": [
+        [
+          "Model",
+          "FlatAE-DTW"
+        ],
+        [
+          "DTW-Sammon weight",
+          "0.1"
+        ],
+        [
+          "Latent",
+          "L2-normalized z / 32D"
+        ],
+        [
+          "Published feature",
+          "action only"
+        ]
+      ],
+      "phases": [],
+      "source_label": "frozen Rel-AE checkpoint",
+      "sources": [
+        "/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_dtw_z32_repraw_z_fh128_dh512_gw0p1/checkpoint-step-20000"
+      ]
+    },
+    "pca32_action": {
+      "facts": [
+        [
+          "Representation",
+          "PCA32"
+        ],
+        [
+          "Input",
+          "normalized action [16,12] flattened to 192D"
+        ],
+        [
+          "Fit rows",
+          "5,760 (folds 2-9)"
+        ],
+        [
+          "Published feature",
+          "action only"
+        ]
+      ],
+      "phases": [],
+      "source_label": "frozen PCA32 oracle artifact",
+      "sources": [
+        "/home/ext_minje/groot_robocasa-kitchen/offline test/v2/action_geometry_oracle/pilot_fold0/representation/pca32.pt"
+      ]
     }
   }
 }

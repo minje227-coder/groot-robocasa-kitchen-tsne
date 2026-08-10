@@ -247,7 +247,8 @@ def render_runs(manifest: dict[str, Any], *, allow_missing: bool = False) -> Non
         save_json(run_dir / "manifest.json", run_manifest)
         catalog.append({"id": run_id, "family": cfg["family"], "label": cfg["label"], "path": f"runs/{run_id}", "manifest_id": manifest["manifest_id"], "features": available_features})
         print(f"RENDERED {run_id} features={available_features}", flush=True)
-    save_json(SITE_ROOT / "data/catalog.json", {"version": 2, "families": ["RoboCasa-Kitchen Ckpt", "Action (TimewarpVAE)"], "runs": catalog})
+    families = list(dict.fromkeys(cfg["family"] for cfg in RUNS.values()))
+    save_json(SITE_ROOT / "data/catalog.json", {"version": 2, "families": families, "runs": catalog})
 
 
 def write_profiles() -> None:
@@ -267,6 +268,11 @@ def write_profiles() -> None:
         "rkd_raw_mu_angle_only_060000": policy_profile("TimewarpVAE raw_mu", "0.3 to 0 cosine", 0.0, 1.0, "processed output"),
         "timewarp_vae_raw_mu": {"facts": [["Latent", "posterior mean mu"], ["Dimension", "32"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen TimewarpVAE target tensor", "sources": [str(VAE_TARGETS)]},
         "timewarp_vae_unit_mu": {"facts": [["Latent", "L2-normalized posterior mean"], ["Dimension", "32"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen TimewarpVAE target tensor", "sources": [str(VAE_TARGETS)]},
+        "plain_ae_raw_z": {"facts": [["Model", "PlainAE (Flat encoder)"], ["Geometry loss", "none"], ["Latent", "raw z / 32D"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen Rel-AE checkpoint", "sources": ["/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_z32_fh128_dh512/checkpoint-step-20000"]},
+        "plain_ae_unit_z": {"facts": [["Model", "PlainAE (Flat encoder)"], ["Geometry loss", "none"], ["Latent", "L2-normalized z / 32D"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen Rel-AE checkpoint", "sources": ["/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_z32_fh128_dh512/checkpoint-step-20000"]},
+        "flat_ae_dtw_w0p1_raw_z": {"facts": [["Model", "FlatAE-DTW"], ["DTW-Sammon weight", "0.1"], ["Latent", "raw z / 32D"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen Rel-AE checkpoint", "sources": ["/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_dtw_z32_repraw_z_fh128_dh512_gw0p1/checkpoint-step-20000"]},
+        "flat_ae_dtw_w0p1_unit_z": {"facts": [["Model", "FlatAE-DTW"], ["DTW-Sammon weight", "0.1"], ["Latent", "L2-normalized z / 32D"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen Rel-AE checkpoint", "sources": ["/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_dtw_z32_repraw_z_fh128_dh512_gw0p1/checkpoint-step-20000"]},
+        "pca32_action": {"facts": [["Representation", "PCA32"], ["Input", "normalized action [16,12] flattened to 192D"], ["Fit rows", "5,760 (folds 2-9)"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen PCA32 oracle artifact", "sources": ["/home/ext_minje/groot_robocasa-kitchen/offline test/v2/action_geometry_oracle/pilot_fold0/representation/pca32.pt"]},
     }
     for run_id, profile in profiles.items():
         if run_id in CHECKPOINTS:
