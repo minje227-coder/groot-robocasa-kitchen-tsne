@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "id": "rkd_raw_mu_w0p3to0_cosine_060000",
+  "label": "RKD RawMu W0.3 to 0 Cosine 60K",
+  "family": "RoboCasa-Kitchen Ckpt",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "processed"
+  ],
+  "points_files": {
+    "processed": "points_processed.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "processed": {
+      "checkpoint": "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/RKD_RawMu_W0p3to0_Cosine/RKD_RawMu_W0p3to0_Cosine/checkpoint-60000",
+      "config_sha256": "83dee2a2e6c6da3efd880b8f2bab2a0183a0bc2910781cad45c3384972898b77",
+      "index_sha256": "b06d869be84c97d2ec0ca72f66e6ecc0c8e68d989508a693fbbdc6d33ec9c7c1",
+      "dataset_statistics_sha256": "4a078e8fd306aa50e1218c7aa9e7ffd4ce16a1d55430e7b9c5f07350418dc8c3",
+      "cache": "/home/ext_minje/groot_robocasa-kitchen/offline test/caches/rawmu_w0p3to0_cosine60k",
+      "cache_summary_sha256": "553823b0b4e5ea907ee0f5748e5db8c8eea3a906ca7f27e78ccbee8eade8f8fa",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "points": 7200
+    }
+  }
+}

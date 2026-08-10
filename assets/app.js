@@ -2,7 +2,7 @@ const state = {
   catalog: null,
   trainingProfiles: null,
   openProfileCards: new Set(),
-  family: "INSIGHT Ckpt",
+  family: "RoboCasa-Kitchen Ckpt",
   run: null,
   runManifest: null,
   sequences: null,
@@ -16,13 +16,13 @@ const state = {
   visibleActionDims: null,
   selectedCharts: [],
   preferredFeatures: [],
-  cam: "guide",
+  cam: "left_view",
   selectionMode: "single",
   selectedPoints: [],
   selected: null,
   visibleSeqs: new Set(),
   openTasks: new Set(),
-  openTaskGroups: new Set(["Drawer", "Door", "Bottle"]),
+  openTaskGroups: new Set(["Cabinet", "Coffee", "Pick & Place", "Appliances", "Sink"]),
   lastHash: "",
   syncingVideos: false,
   videoMode: "chunk",
@@ -139,16 +139,17 @@ async function loadActionChunks() {
   state.actionChunksError = null;
   try {
     const payload = await fetchJson("./data/action_chunks/official_manifest_transformed_actions.json");
-    const bySeq = new Map();
+    const byPoint = new Map();
     (payload.seq_ids || []).forEach((seqId, index) => {
-      bySeq.set(Number(seqId), {
+      const frame = Number(payload.frame_indices?.[index] ?? 0);
+      byPoint.set(`${Number(seqId)}::${frame}`, {
         seqId: Number(seqId),
         anchor: Number(payload.anchor_ids?.[index] ?? 0),
-        frame: Number(payload.frame_indices?.[index] ?? 0),
+        frame,
         values: payload.chunks?.[index] || [],
       });
     });
-    state.actionChunks = { ...payload, bySeq };
+    state.actionChunks = { ...payload, byPoint };
   } catch (error) {
     state.actionChunksError = error;
   } finally {
@@ -157,7 +158,7 @@ async function loadActionChunks() {
 }
 
 function getActionChunk(selection) {
-  return state.actionChunks?.bySeq?.get(Number(selection?.seq)) || null;
+  return state.actionChunks?.byPoint?.get(`${Number(selection?.seq)}::${Number(selection?.frame)}`) || null;
 }
 
 function actionDimLabels(dimCount) {
@@ -190,28 +191,24 @@ function toggleActionDim(dim, dimCount) {
   renderPanel();
 }
 
-const familyOrder = ["INSIGHT Ckpt", "Action (Timewarp VAE)"];
+const familyOrder = ["RoboCasa-Kitchen Ckpt", "Action (TimewarpVAE)"];
 const featureOrder = ["raw", "processed", "action"];
 
-const insightTaskGroups = ["Drawer", "Door", "Bottle"];
-const insightTaskMeta = {
-  "1ext": { group: "Drawer", label: "[1ext] Arrow-guided Open" },
-  "3a": { group: "Door", label: "[3a] CW, Push" },
-  "3b": { group: "Door", label: "[3b] CCW, Push" },
-  "3c": { group: "Door", label: "[3c] CW, Pull" },
-  "3d": { group: "Door", label: "[3d] CCW, Pull" },
-  "5a": { group: "Bottle", label: "[5a] Squeeze CCW Open" },
-  "5b": { group: "Bottle", label: "[5b] CCW Open" },
-  "5c": { group: "Bottle", label: "[5c] CW Open" },
-  "5d": { group: "Bottle", label: "[5d] CW Close" },
-  "5e": { group: "Bottle", label: "[5e] CCW Close" },
-  "5f": { group: "Bottle", label: "[5f] CW Close" },
-  "5g": { group: "Bottle", label: "[5g] Squeeze CW Open" },
-  "5h": { group: "Bottle", label: "[5h] CCW Close" },
-};
+const kitchenTaskGroups = ["Cabinet", "Coffee", "Pick & Place", "Appliances", "Sink"];
+const kitchenTaskOrder = [
+  "CloseDoubleDoor", "CloseDrawer", "CloseSingleDoor", "OpenDoubleDoor", "OpenDrawer", "OpenSingleDoor",
+  "CoffeePressButton", "CoffeeServeMug", "CoffeeSetupMug",
+  "PnPCabToCounter", "PnPCounterToCab", "PnPCounterToMicrowave", "PnPCounterToSink", "PnPCounterToStove",
+  "PnPMicrowaveToCounter", "PnPSinkToCounter", "PnPStoveToCounter",
+  "TurnOffMicrowave", "TurnOffStove", "TurnOnMicrowave", "TurnOnStove",
+  "TurnOffSinkFaucet", "TurnOnSinkFaucet", "TurnSinkSpout",
+];
 
-function getInsightTaskMeta(taskName) {
-  return insightTaskMeta[taskName] || { group: "Other", label: taskName };
+function getTaskMeta(seqOrName) {
+  if (typeof seqOrName === "object" && seqOrName) {
+    return { group: seqOrName.task_group || "Other", label: seqOrName.task_label || seqOrName.task_name };
+  }
+  return { group: "Other", label: String(seqOrName || "") };
 }
 
 function orderIndex(list, value) {
@@ -248,8 +245,8 @@ function sortSelectedCharts() {
 }
 
 const familyLabels = {
-  "INSIGHT Ckpt": "INSIGHT Ckpt",
-  "Action (Timewarp VAE)": "Action (Timewarp VAE)",
+  "RoboCasa-Kitchen Ckpt": "RoboCasa-Kitchen Ckpt",
+  "Action (TimewarpVAE)": "Action (TimewarpVAE)",
 };
 
 function hashParams(extra = {}) {
@@ -557,7 +554,7 @@ async function applyHash() {
   }
   await loadCatalog();
   if (!state.catalog) return;
-  const family = hash.get("family") || "INSIGHT Ckpt";
+  const family = hash.get("family") || "RoboCasa-Kitchen Ckpt";
   const runId = hash.get("run");
   state.family = family;
   renderSidebar();
@@ -597,10 +594,10 @@ function renderShell() {
   const shell = el("div", { class: "shell" }, [
     el("header", { class: "topbar" }, [
       el("div", { class: "title" }, [
-        el("h1", { text: "INSIGHT temporal t-SNE" }),
-        el("p", { text: "6,517 frame points from 130 shared episodes across INSIGHT checkpoints and Timewarp VAE action embeddings." }),
+        el("h1", { text: "RoboCasa-Kitchen temporal t-SNE" }),
+        el("p", { text: "7,200 shared frame points from 240 episodes across six GR00T checkpoints and TimewarpVAE action embeddings." }),
       ]),
-      el("a", { href: "https://github.com/minje227-coder/groot-insight-tsne", text: "GitHub" }),
+      el("a", { href: "https://github.com/minje227-coder/groot-robocasa-kitchen-tsne", text: "GitHub" }),
     ]),
     el("main", { class: "layout" }, [
       el("aside", { class: "sidebar" }),
@@ -811,7 +808,7 @@ function renderEmpty() {
   const stage = document.querySelector(".stage");
   stage.appendChild(el("div", { class: "home-panel" }, [
     el("h2", { text: "Frame t-SNE" }),
-    el("p", { text: "Task-balanced episode samples: 10 episodes per task, every frame included." }),
+    el("p", { text: "Task-balanced manifest: 10 episodes per task and 30 uniformly sampled frames per episode." }),
     el("p", { class: "status", text: "Select a run from the sidebar." }),
   ]));
   document.querySelector(".panel").innerHTML = "";
@@ -1139,9 +1136,9 @@ function setSelectionMode(mode) {
 
 function renderCameraControls() {
   const cams = [
-    ["guide", "Guide"],
-    ["right_shoulder", "Shoulder"],
-    ["wrist", "Wrist"],
+    ["left_view", "Left"],
+    ["right_view", "Right"],
+    ["wrist_view", "Wrist"],
   ];
   return el("div", { class: "camera-mode-toggle" }, cams.map(([cam, label]) =>
     el("button", {
@@ -1399,7 +1396,7 @@ function renderVideoStrip(stage) {
     const cams = Object.keys(seq.videos);
     if (!cams.length) return null;
     const shownCams = state.selectionMode === "single"
-      ? ["guide", "right_shoulder", "wrist"].filter((cam) => seq.videos[cam])
+      ? ["left_view", "right_view", "wrist_view"].filter((cam) => seq.videos[cam])
       : [seq.videos[state.cam] ? state.cam : cams[0]];
     const fps = manifest.fps || 20;
     const videoStartFrame = numericValue(seq.video_start_frame) ?? 0;
@@ -2316,7 +2313,7 @@ function renderTaskDescriptionPanel(panel) {
   const sequences = state.sequences ? state.sequences.sequences : [];
   const byGroup = new Map();
   for (const seq of sequences) {
-    const meta = getInsightTaskMeta(seq.task_name);
+    const meta = getTaskMeta(seq);
     if (!byGroup.has(meta.group)) byGroup.set(meta.group, new Map());
     const byTask = byGroup.get(meta.group);
     if (!byTask.has(seq.task_name)) byTask.set(seq.task_name, []);
@@ -2351,8 +2348,8 @@ function renderTaskDescriptionPanel(panel) {
 
   const taskPanel = el("div", { class: "task-panel" });
   const groupNames = [...byGroup.keys()].sort((a, b) => {
-    const ai = insightTaskGroups.indexOf(a);
-    const bi = insightTaskGroups.indexOf(b);
+    const ai = kitchenTaskGroups.indexOf(a);
+    const bi = kitchenTaskGroups.indexOf(b);
     return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi) || a.localeCompare(b);
   });
 
@@ -2395,14 +2392,14 @@ function renderTaskDescriptionPanel(panel) {
 
     const taskList = el("div", { class: `task-group-list${isGroupOpen ? " open" : ""}` });
     const taskEntries = [...byTask.entries()].sort((a, b) => {
-      const ai = Object.keys(insightTaskMeta).indexOf(a[0]);
-      const bi = Object.keys(insightTaskMeta).indexOf(b[0]);
+      const ai = kitchenTaskOrder.indexOf(a[0]);
+      const bi = kitchenTaskOrder.indexOf(b[0]);
       return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi) || a[0].localeCompare(b[0]);
     });
 
     for (const [taskName, taskSeqs] of taskEntries) {
       taskSeqs.sort((a, b) => a.episode_index - b.episode_index || a.seq_id - b.seq_id);
-      const taskMeta = getInsightTaskMeta(taskName);
+      const taskMeta = getTaskMeta(taskSeqs[0] || taskName);
       const visibleCount = taskSeqs.filter((seq) => state.visibleSeqs.has(seq.seq_id)).length;
       const isOpen = state.openTasks.has(taskName);
       const taskButton = el("button", {

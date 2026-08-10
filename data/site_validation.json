@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "runs": 8,
+  "charts": 9,
+  "points_per_chart": 7200,
+  "episodes": 240,
+  "clips": 720,
+  "clip_bytes": 35937762,
+  "manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f"
+}

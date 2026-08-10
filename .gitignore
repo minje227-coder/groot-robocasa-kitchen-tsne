@@ -3,3 +3,7 @@ logs/
 *.npz
 __pycache__/
 .DS_Store
+*.partial*
+*.log
+*.exit
+BUILD_COMPLETE

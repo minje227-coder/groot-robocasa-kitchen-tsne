@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "id": "timewarp_vae_raw_mu",
+  "label": "TimewarpVAE RawMu",
+  "family": "Action (TimewarpVAE)",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "action"
+  ],
+  "points_files": {
+    "action": "points_action.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "action": {
+      "checkpoint": "/home/ext_minje/groot_robocasa_V2/TimewarpVAE_ckpt/focused_v2/mg_gr00t_300/frame_uniform_top5_b4096_20k/b4096/B24_z32_g4_h512_b2e4/checkpoint-step-20000-epoch-44.64",
+      "targets": "/home/ext_minje/groot_robocasa-kitchen/offline test/vae_oracle/frozen_vae_v1/targets.pt",
+      "targets_sha256": "26a13ba5004fa7a77d43a37e72eec509797f1684c1dfc02b263199ec0a284aa5",
+      "tensor": "mu",
+      "action_only": true,
+      "points": 7200,
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f"
+    }
+  }
+}

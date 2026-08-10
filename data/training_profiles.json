@@ -1,454 +1,322 @@
 {
   "version": 1,
-  "description": "Checkpoint-derived training profiles for active-model sidebar cards.",
   "profiles": {
     "baseline_060000": {
-      "kind": "policy",
       "facts": [
         [
           "Checkpoint",
-          "60K"
+          "60,000"
         ],
         [
-          "Policy",
-          "GR00T"
+          "Teacher target",
+          "none"
         ],
         [
-          "Action space",
-          "EE Absolute Rot6D"
+          "Published features",
+          "raw VLM + processed output"
         ],
         [
-          "Learning rate",
-          "1e-4 · Cosine"
-        ],
-        [
-          "LR warmup",
-          "500 steps"
-        ],
-        [
-          "Global batch",
-          "64"
-        ],
-        [
-          "Trainable",
-          "Projector · Diffusion · VLLN"
-        ],
-        [
-          "Frozen",
-          "LLM · Visual encoder"
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
         ]
       ],
       "phases": [
         {
-          "name": "FM only",
-          "range": "0–60K",
-          "badge": "RKD OFF",
+          "name": "Fine-tuning",
+          "range": "step 0 to 60K",
+          "badge": "Baseline",
           "enabled": false,
           "rows": [
             [
-              "FM weight",
-              "1.0"
+              "RKD schedule",
+              "disabled"
             ],
             [
-              "RKD weight",
+              "Distance weight",
+              "0.0"
+            ],
+            [
+              "Angle weight",
               "0.0"
             ]
           ]
         }
       ],
-      "source_label": "train_config.json",
+      "source_label": "checkpoint hashes + training YAML",
       "sources": [
-        "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/Baseline/checkpoints/060000/pretrained_model/train_config.json"
+        "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/baseline/baseline_n17_rldxcfg_bs64_60k_sd0_20260804/checkpoint-60000"
       ]
     },
-    "lapstyle_linear_6k_060000": {
-      "kind": "policy",
+    "rkd_unit_mu_060000": {
       "facts": [
         [
           "Checkpoint",
-          "60K"
+          "60,000"
         ],
         [
-          "Policy",
-          "GR00T + RKD"
+          "Teacher target",
+          "TimewarpVAE unit_mu"
         ],
         [
-          "Action space",
-          "EE Absolute Rot6D"
+          "Published features",
+          "processed output"
         ],
         [
-          "Learning rate",
-          "1e-4 · Cosine"
-        ],
-        [
-          "LR warmup",
-          "6K steps"
-        ],
-        [
-          "Global batch",
-          "64"
-        ],
-        [
-          "Teacher",
-          "Timewarp VAE 30K"
-        ],
-        [
-          "Trainable",
-          "Projector · Diffusion · VLLN"
-        ],
-        [
-          "Frozen",
-          "LLM · Visual encoder"
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
         ]
       ],
       "phases": [
         {
-          "name": "LAP RKD linear decay",
-          "range": "0–6K",
+          "name": "Fine-tuning",
+          "range": "step 0 to 60K",
           "badge": "RKD ON",
           "enabled": true,
           "rows": [
             [
-              "FM weight",
+              "RKD schedule",
+              "1.0 to 0 cosine"
+            ],
+            [
+              "Distance weight",
               "1.0"
             ],
             [
-              "RKD weight",
-              "1.0 → 0.0"
-            ],
-            [
-              "RKD schedule",
-              "Linear"
-            ],
-            [
-              "Distance : Angle",
-              "1 : 2"
+              "Angle weight",
+              "2.0"
             ]
           ]
-        },
+        }
+      ],
+      "source_label": "checkpoint hashes + training YAML",
+      "sources": [
+        "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/RKD_UnitMu/RKD_UnitMu/checkpoint-60000"
+      ]
+    },
+    "rkd_raw_mu_w0p3to0_cosine_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Teacher target",
+          "TimewarpVAE raw_mu"
+        ],
+        [
+          "Published features",
+          "processed output"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [
         {
-          "name": "FM only",
-          "range": "6K–60K",
-          "badge": "RKD OFF",
-          "enabled": false,
+          "name": "Fine-tuning",
+          "range": "step 0 to 60K",
+          "badge": "RKD ON",
+          "enabled": true,
           "rows": [
             [
-              "FM weight",
+              "RKD schedule",
+              "0.3 to 0 cosine"
+            ],
+            [
+              "Distance weight",
               "1.0"
             ],
             [
-              "RKD weight",
+              "Angle weight",
+              "2.0"
+            ]
+          ]
+        }
+      ],
+      "source_label": "checkpoint hashes + training YAML",
+      "sources": [
+        "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/RKD_RawMu_W0p3to0_Cosine/RKD_RawMu_W0p3to0_Cosine/checkpoint-60000"
+      ]
+    },
+    "rkd_raw_mu_distance_angle_1to1_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Teacher target",
+          "TimewarpVAE raw_mu"
+        ],
+        [
+          "Published features",
+          "processed output"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [
+        {
+          "name": "Fine-tuning",
+          "range": "step 0 to 60K",
+          "badge": "RKD ON",
+          "enabled": true,
+          "rows": [
+            [
+              "RKD schedule",
+              "0.3 to 0 cosine"
+            ],
+            [
+              "Distance weight",
+              "1.0"
+            ],
+            [
+              "Angle weight",
+              "1.0"
+            ]
+          ]
+        }
+      ],
+      "source_label": "checkpoint hashes + training YAML",
+      "sources": [
+        "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/RKD_RawMu_W0p3to0_Cosine_DistanceAngle1to1/RKD_RawMu_W0p3to0_Cosine_DistanceAngle1to1/checkpoint-60000"
+      ]
+    },
+    "rkd_raw_mu_distance_only_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Teacher target",
+          "TimewarpVAE raw_mu"
+        ],
+        [
+          "Published features",
+          "processed output"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [
+        {
+          "name": "Fine-tuning",
+          "range": "step 0 to 60K",
+          "badge": "RKD ON",
+          "enabled": true,
+          "rows": [
+            [
+              "RKD schedule",
+              "0.3 to 0 cosine"
+            ],
+            [
+              "Distance weight",
+              "1.0"
+            ],
+            [
+              "Angle weight",
               "0.0"
             ]
           ]
         }
       ],
-      "source_label": "train_config.json + phase_schedule.json",
+      "source_label": "checkpoint hashes + training YAML",
       "sources": [
-        "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/RKD_TimewarpVAE/LAPstyle_linear_6K/checkpoints/060000/pretrained_model/train_config.json",
-        "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/RKD_TimewarpVAE/LAPstyle_linear_6K/checkpoints/060000/pretrained_model/phase_schedule.json"
+        "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/RKD_RawMu_W0p3to0_Cosine_DistanceOnly/RKD_RawMu_W0p3to0_Cosine_DistanceOnly/checkpoint-60000"
       ]
     },
-    "lapstyle_linear_10k_060000": {
-      "kind": "policy",
+    "rkd_raw_mu_angle_only_060000": {
       "facts": [
         [
           "Checkpoint",
-          "60K"
+          "60,000"
         ],
         [
-          "Policy",
-          "GR00T + RKD"
+          "Teacher target",
+          "TimewarpVAE raw_mu"
         ],
         [
-          "Action space",
-          "EE Absolute Rot6D"
+          "Published features",
+          "processed output"
         ],
         [
-          "Learning rate",
-          "1e-4 · Cosine"
-        ],
-        [
-          "LR warmup",
-          "6K steps"
-        ],
-        [
-          "Global batch",
-          "64"
-        ],
-        [
-          "Teacher",
-          "Timewarp VAE 30K"
-        ],
-        [
-          "Trainable",
-          "Projector · Diffusion · VLLN"
-        ],
-        [
-          "Frozen",
-          "LLM · Visual encoder"
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
         ]
       ],
       "phases": [
         {
-          "name": "LAP RKD linear decay",
-          "range": "0–10K",
+          "name": "Fine-tuning",
+          "range": "step 0 to 60K",
           "badge": "RKD ON",
           "enabled": true,
           "rows": [
             [
-              "FM weight",
-              "1.0"
-            ],
-            [
-              "RKD weight",
-              "1.0 → 0.0"
-            ],
-            [
               "RKD schedule",
-              "Linear"
+              "0.3 to 0 cosine"
             ],
             [
-              "Distance : Angle",
-              "1 : 2"
-            ]
-          ]
-        },
-        {
-          "name": "FM only",
-          "range": "10K–60K",
-          "badge": "RKD OFF",
-          "enabled": false,
-          "rows": [
-            [
-              "FM weight",
-              "1.0"
-            ],
-            [
-              "RKD weight",
+              "Distance weight",
               "0.0"
-            ]
-          ]
-        }
-      ],
-      "source_label": "train_config.json + phase_schedule.json",
-      "sources": [
-        "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/RKD_TimewarpVAE/LAPstyle_linear_10K/checkpoints/060000/pretrained_model/train_config.json",
-        "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/RKD_TimewarpVAE/LAPstyle_linear_10K/checkpoints/060000/pretrained_model/phase_schedule.json"
-      ]
-    },
-    "rsclstyle_cosine_060000": {
-      "kind": "policy",
-      "facts": [
-        [
-          "Checkpoint",
-          "60K"
-        ],
-        [
-          "Policy",
-          "GR00T + RKD"
-        ],
-        [
-          "Action space",
-          "EE Absolute Rot6D"
-        ],
-        [
-          "Learning rate",
-          "1e-4 · Cosine"
-        ],
-        [
-          "LR warmup",
-          "3K steps"
-        ],
-        [
-          "Global batch",
-          "64"
-        ],
-        [
-          "Teacher",
-          "Timewarp VAE 30K"
-        ],
-        [
-          "Trainable",
-          "Projector · Diffusion · VLLN"
-        ],
-        [
-          "Frozen",
-          "LLM · Visual encoder"
-        ]
-      ],
-      "phases": [
-        {
-          "name": "RSCL RKD cosine decay",
-          "range": "0–60K",
-          "badge": "RKD ON",
-          "enabled": true,
-          "rows": [
+            ],
             [
-              "FM weight",
+              "Angle weight",
               "1.0"
-            ],
-            [
-              "RKD weight",
-              "1.0 → 0.0"
-            ],
-            [
-              "RKD schedule",
-              "Cosine"
-            ],
-            [
-              "Distance : Angle",
-              "1 : 2"
             ]
           ]
         }
       ],
-      "source_label": "train_config.json + phase_schedule.json",
+      "source_label": "checkpoint hashes + training YAML",
       "sources": [
-        "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/RKD_TimewarpVAE/RSCLstyle_cosine_60K/checkpoints/060000/pretrained_model/train_config.json",
-        "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/RKD_TimewarpVAE/RSCLstyle_cosine_60K/checkpoints/060000/pretrained_model/phase_schedule.json"
+        "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/RKD_RawMu_W0p3to0_Cosine_AngleOnly/RKD_RawMu_W0p3to0_Cosine_AngleOnly/checkpoint-60000"
       ]
     },
-    "timewarp_vae_c8_01_c3_008_30k": {
-      "kind": "action_vae",
+    "timewarp_vae_raw_mu": {
       "facts": [
-        [
-          "Checkpoint",
-          "30K · Epoch 39.11"
-        ],
-        [
-          "Action input",
-          "16 steps × 10 dims"
-        ],
-        [
-          "Action space",
-          "EE Absolute Rot6D"
-        ],
-        [
-          "Embedding",
-          "μ · L2 normalized"
-        ],
         [
           "Latent",
-          "16D"
+          "posterior mean mu"
         ],
         [
-          "Granularity",
-          "4"
+          "Dimension",
+          "32"
         ],
         [
-          "Decoder",
-          "Functional · basis 64"
-        ],
-        [
-          "Episode end",
-          "Repeat last valid action"
+          "Published feature",
+          "action only"
         ]
       ],
-      "phases": [
-        {
-          "name": "Timewarp VAE training",
-          "range": "0–30K",
-          "badge": "VAE",
-          "enabled": null,
-          "rows": [
-            [
-              "Output",
-              "16D action embedding"
-            ],
-            [
-              "Sampling",
-              "Deterministic μ"
-            ]
-          ]
-        }
-      ],
-      "source_label": "model_config.json + action_contract.json",
+      "phases": [],
+      "source_label": "frozen TimewarpVAE target tensor",
       "sources": [
-        "/home/ext_minje/groot_insight/TimewarpVAE_ckpt/TimewarpVAE_combo_top8_30k/C8_01_C3_008_beta_5em05_latent_dim_16_granularity_4_decoder_hidden_dim_512/checkpoint-step-30000-epoch-39.11/model_config.json",
-        "/home/ext_minje/groot_insight/TimewarpVAE_ckpt/TimewarpVAE_combo_top8_30k/C8_01_C3_008_beta_5em05_latent_dim_16_granularity_4_decoder_hidden_dim_512/checkpoint-step-30000-epoch-39.11/action_contract.json"
+        "/home/ext_minje/groot_robocasa-kitchen/offline test/vae_oracle/frozen_vae_v1/targets.pt"
       ]
     },
-    "timewarp_vae_b512_rd_k08_z16_g4_h256_20k": {
-      "kind": "action_vae",
+    "timewarp_vae_unit_mu": {
       "facts": [
         [
-          "Checkpoint",
-          "20K · Epoch 46.84"
-        ],
-        [
-          "Train batch",
-          "512"
-        ],
-        [
-          "Action input",
-          "16 steps × 16 dims"
-        ],
-        [
-          "Action views",
-          "EE Abs Rot6D 10D + EE Delta 6D"
-        ],
-        [
-          "Gripper",
-          "Deduplicated · Abs view owner"
-        ],
-        [
-          "Train stats",
-          "16D · n=218,367"
-        ],
-        [
-          "Stats SHA-256",
-          "89c7f97c6639…"
-        ],
-        [
-          "Embedding",
-          "μ · L2 normalized"
-        ],
-        [
           "Latent",
-          "16D"
+          "L2-normalized posterior mean"
         ],
         [
-          "Granularity",
-          "4"
+          "Dimension",
+          "32"
         ],
         [
-          "Decoder",
-          "Functional · h256 · basis 64"
+          "Published feature",
+          "action only"
         ]
       ],
-      "phases": [
-        {
-          "name": "Timewarp VAE training",
-          "range": "0–20K",
-          "badge": "VAE",
-          "enabled": null,
-          "rows": [
-            [
-              "Learning rate",
-              "1e-4"
-            ],
-            [
-              "LR warmup",
-              "500 steps"
-            ],
-            [
-              "Output",
-              "16D action embedding"
-            ],
-            [
-              "Sampling",
-              "Deterministic μ"
-            ]
-          ]
-        }
-      ],
-      "source_label": "config.yaml + model_config.json + action_contract.json + train_stats.json",
+      "phases": [],
+      "source_label": "frozen TimewarpVAE target tensor",
       "sources": [
-        "/home/ext_minje/groot_insight/TimewarpVAE_ckpt/multispace_gripper_dedup_batch_ablation_v1/b512/RD/K08_z16_g4_h256/checkpoint-step-20000-epoch-46.84/config.yaml",
-        "/home/ext_minje/groot_insight/TimewarpVAE_ckpt/multispace_gripper_dedup_batch_ablation_v1/b512/RD/K08_z16_g4_h256/checkpoint-step-20000-epoch-46.84/model_config.json",
-        "/home/ext_minje/groot_insight/TimewarpVAE_ckpt/multispace_gripper_dedup_batch_ablation_v1/b512/RD/K08_z16_g4_h256/checkpoint-step-20000-epoch-46.84/action_contract.json",
-        "/home/ext_minje/groot_insight/TimewarpVAE_ckpt/multispace_gripper_dedup_batch_ablation_v1/b512/RD/K08_z16_g4_h256/checkpoint-step-20000-epoch-46.84/train_stats.json"
+        "/home/ext_minje/groot_robocasa-kitchen/offline test/vae_oracle/frozen_vae_v1/targets.pt"
       ]
     }
   }

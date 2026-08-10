@@ -1,67 +1,87 @@
 {
   "version": 2,
   "families": [
-    "INSIGHT Ckpt",
-    "Action (Timewarp VAE)"
+    "RoboCasa-Kitchen Ckpt",
+    "Action (TimewarpVAE)"
   ],
   "runs": [
     {
       "id": "baseline_060000",
-      "family": "INSIGHT Ckpt",
+      "family": "RoboCasa-Kitchen Ckpt",
       "label": "Baseline 60K",
       "path": "runs/baseline_060000",
-      "manifest_id": "01fb32c51e",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "raw",
         "processed"
       ]
     },
     {
-      "id": "lapstyle_linear_6k_060000",
-      "family": "INSIGHT Ckpt",
-      "label": "LAPstyle Linear 6K 60K",
-      "path": "runs/lapstyle_linear_6k_060000",
-      "manifest_id": "01fb32c51e",
+      "id": "rkd_unit_mu_060000",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "RKD UnitMu 60K",
+      "path": "runs/rkd_unit_mu_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "processed"
       ]
     },
     {
-      "id": "lapstyle_linear_10k_060000",
-      "family": "INSIGHT Ckpt",
-      "label": "LAPstyle Linear 10K 60K",
-      "path": "runs/lapstyle_linear_10k_060000",
-      "manifest_id": "01fb32c51e",
+      "id": "rkd_raw_mu_w0p3to0_cosine_060000",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "RKD RawMu W0.3 to 0 Cosine 60K",
+      "path": "runs/rkd_raw_mu_w0p3to0_cosine_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "processed"
       ]
     },
     {
-      "id": "rsclstyle_cosine_060000",
-      "family": "INSIGHT Ckpt",
-      "label": "RSCLstyle Cosine 60K",
-      "path": "runs/rsclstyle_cosine_060000",
-      "manifest_id": "01fb32c51e",
+      "id": "rkd_raw_mu_distance_angle_1to1_060000",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "RKD RawMu Distance:Angle 1:1 60K",
+      "path": "runs/rkd_raw_mu_distance_angle_1to1_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "processed"
       ]
     },
     {
-      "id": "timewarp_vae_c8_01_c3_008_30k",
-      "family": "Action (Timewarp VAE)",
-      "label": "[Abs_6D] C8_01_C3_008 30K",
-      "path": "runs/timewarp_vae_c8_01_c3_008_30k",
-      "manifest_id": "01fb32c51e",
+      "id": "rkd_raw_mu_distance_only_060000",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "RKD RawMu Distance Only 60K",
+      "path": "runs/rkd_raw_mu_distance_only_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "rkd_raw_mu_angle_only_060000",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "RKD RawMu Angle Only 60K",
+      "path": "runs/rkd_raw_mu_angle_only_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "timewarp_vae_raw_mu",
+      "family": "Action (TimewarpVAE)",
+      "label": "TimewarpVAE RawMu",
+      "path": "runs/timewarp_vae_raw_mu",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "action"
       ]
     },
     {
-      "id": "timewarp_vae_b512_rd_k08_z16_g4_h256_20k",
-      "family": "Action (Timewarp VAE)",
-      "label": "[Abs_6D + Delta] b512/RD/K08_z16_g4_h256@20K",
-      "path": "runs/timewarp_vae_b512_rd_k08_z16_g4_h256_20k",
-      "manifest_id": "01fb32c51e",
+      "id": "timewarp_vae_unit_mu",
+      "family": "Action (TimewarpVAE)",
+      "label": "TimewarpVAE UnitMu",
+      "path": "runs/timewarp_vae_unit_mu",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "action"
       ]

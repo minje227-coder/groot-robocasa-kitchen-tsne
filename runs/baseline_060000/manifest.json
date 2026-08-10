@@ -2,8 +2,9 @@
   "version": 1,
   "id": "baseline_060000",
   "label": "Baseline 60K",
-  "family": "INSIGHT Ckpt",
-  "manifest_id": "01fb32c51e",
+  "family": "RoboCasa-Kitchen Ckpt",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
   "features": [
     "raw",
     "processed"
@@ -13,8 +14,28 @@
     "processed": "points_processed.json"
   },
   "sequences_file": "../../data/sequences.json",
-  "fps": 10,
+  "fps": 20,
   "source": {
-    "checkpoint": "/home/ext_minje/groot_insight/train_ckpt/Abs_6D/Baseline/checkpoints/060000/pretrained_model"
+    "raw": {
+      "checkpoint": "/raid/ext_minje/groot_robocasa-kitchen/train_ckpt/baseline/baseline_n17_rldxcfg_bs64_60k_sd0_20260804/checkpoint-60000",
+      "config_sha256": "83dee2a2e6c6da3efd880b8f2bab2a0183a0bc2910781cad45c3384972898b77",
+      "index_sha256": "12117379d91d029c5979a585d07ba794001730c9516d6de5512e3dedfee30730",
+      "dataset_statistics_sha256": "4a078e8fd306aa50e1218c7aa9e7ffd4ce16a1d55430e7b9c5f07350418dc8c3",
+      "manifest": "/raid/ext_minje/groot_robocasa-kitchen/offline test/manifests/kitchen_24task_ep10_desc3_seed42_frame30_v1/manifest.json",
+      "manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "points": 7200,
+      "pooling": "backbone_attention_mask mean",
+      "feature": "raw"
+    },
+    "processed": {
+      "checkpoint": "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/baseline/baseline_n17_rldxcfg_bs64_60k_sd0_20260804/checkpoint-60000",
+      "config_sha256": "83dee2a2e6c6da3efd880b8f2bab2a0183a0bc2910781cad45c3384972898b77",
+      "index_sha256": "12117379d91d029c5979a585d07ba794001730c9516d6de5512e3dedfee30730",
+      "dataset_statistics_sha256": "4a078e8fd306aa50e1218c7aa9e7ffd4ce16a1d55430e7b9c5f07350418dc8c3",
+      "cache": "/home/ext_minje/groot_robocasa-kitchen/offline test/caches/baseline60k",
+      "cache_summary_sha256": "5a72884cae7fc476395a70c5708f9779c9641bbe1eeefa2792a312eddf866d68",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "points": 7200
+    }
   }
 }
