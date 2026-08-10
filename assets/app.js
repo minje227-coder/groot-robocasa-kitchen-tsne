@@ -2343,7 +2343,7 @@ function renderTaskDescriptionPanel(panel) {
     },
   });
 
-  panel.appendChild(el("h2", { text: "Task / Episode" }));
+  panel.appendChild(el("h2", { text: "Task / Description / Episode" }));
   panel.appendChild(el("div", { class: "task-toolbar" }, [allOn, allOff]));
 
   const taskPanel = el("div", { class: "task-panel" });
@@ -2435,46 +2435,59 @@ function renderTaskDescriptionPanel(panel) {
       });
 
       const details = el("div", { class: `desc-list${isOpen ? " open" : ""}` });
-      const description = taskSeqs[0]?.description || "";
-      const descriptionButton = el("button", {
-        class: `desc-toggle${visibleCount ? " active" : " inactive"}${visibleCount && visibleCount < taskSeqs.length ? " partial" : ""}`,
-        text: description,
-        title: `Toggle all ${taskSeqs.length} episodes`,
-        onmousedown: (event) => event.preventDefault(),
-        onclick: () => {
-          preserveTaskPanelScroll();
-          const nextOn = visibleCount !== taskSeqs.length;
-          for (const seq of taskSeqs) {
-            if (nextOn) state.visibleSeqs.add(seq.seq_id);
-            else state.visibleSeqs.delete(seq.seq_id);
-          }
-          ensureSelectedPoint(true);
-          renderViewer();
-        },
-      });
-      const episodeButtons = taskSeqs.map((seq, index) => {
-        const visible = state.visibleSeqs.has(seq.seq_id);
-        return el("button", {
-          class: `desc-episode-toggle${visible ? " active" : " inactive"}`,
-          text: String(index + 1),
-          title: `Episode ${index + 1} (dataset episode ${seq.episode_index})`,
-          "aria-label": `${taskMeta.label}, episode ${index + 1}, ${visible ? "on" : "off"}`,
+      const taskEpisodeNumber = new Map(taskSeqs.map((seq, index) => [seq.seq_id, index + 1]));
+      const byDescription = new Map();
+      for (const seq of taskSeqs) {
+        const description = seq.description || "(no description)";
+        if (!byDescription.has(description)) byDescription.set(description, []);
+        byDescription.get(description).push(seq);
+      }
+      const descriptionEntries = [...byDescription.entries()]
+        .sort((a, b) => a[0].localeCompare(b[0]));
+
+      for (const [description, descSeqs] of descriptionEntries) {
+        const descVisibleCount = descSeqs.filter((seq) => state.visibleSeqs.has(seq.seq_id)).length;
+        const descriptionButton = el("button", {
+          class: `desc-toggle${descVisibleCount ? " active" : " inactive"}${descVisibleCount && descVisibleCount < descSeqs.length ? " partial" : ""}`,
+          text: description,
+          title: `Toggle all ${descSeqs.length} matching episodes`,
           onmousedown: (event) => event.preventDefault(),
-          onclick: (event) => {
-            event.stopPropagation();
+          onclick: () => {
             preserveTaskPanelScroll();
-            if (state.visibleSeqs.has(seq.seq_id)) state.visibleSeqs.delete(seq.seq_id);
-            else state.visibleSeqs.add(seq.seq_id);
+            const nextOn = descVisibleCount !== descSeqs.length;
+            for (const seq of descSeqs) {
+              if (nextOn) state.visibleSeqs.add(seq.seq_id);
+              else state.visibleSeqs.delete(seq.seq_id);
+            }
             ensureSelectedPoint(true);
             renderViewer();
           },
         });
-      });
-      details.appendChild(el("div", { class: "desc-group" }, [
-        descriptionButton,
-        el("div", { class: "episode-filter-label", text: "Episodes" }),
-        el("div", { class: "desc-episodes" }, episodeButtons),
-      ]));
+        const episodeButtons = descSeqs.map((seq) => {
+          const episodeNumber = taskEpisodeNumber.get(seq.seq_id);
+          const visible = state.visibleSeqs.has(seq.seq_id);
+          return el("button", {
+            class: `desc-episode-toggle${visible ? " active" : " inactive"}`,
+            text: String(episodeNumber),
+            title: `Episode ${episodeNumber} (dataset episode ${seq.episode_index})`,
+            "aria-label": `${taskMeta.label}, ${description}, episode ${episodeNumber}, ${visible ? "on" : "off"}`,
+            onmousedown: (event) => event.preventDefault(),
+            onclick: (event) => {
+              event.stopPropagation();
+              preserveTaskPanelScroll();
+              if (state.visibleSeqs.has(seq.seq_id)) state.visibleSeqs.delete(seq.seq_id);
+              else state.visibleSeqs.add(seq.seq_id);
+              ensureSelectedPoint(true);
+              renderViewer();
+            },
+          });
+        });
+        details.appendChild(el("div", { class: "desc-group" }, [
+          descriptionButton,
+          el("div", { class: "episode-filter-label", text: "Episodes" }),
+          el("div", { class: "desc-episodes" }, episodeButtons),
+        ]));
+      }
       taskList.appendChild(el("div", { class: "task-accordion" }, [
         el("div", { class: "task-row" }, [taskButton, taskToggle]),
         details,
