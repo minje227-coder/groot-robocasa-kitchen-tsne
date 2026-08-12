@@ -2,9 +2,10 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
-ROOT = Path("/home/ext_minje/groot_robocasa-kitchen/t-sne")
+ROOT = Path(os.environ.get("SITE_ROOT", "/home/ext_minje/groot_robocasa-kitchen/t-sne"))
 EXPECTED_SHA = "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f"
 
 
