@@ -144,7 +144,8 @@
       "path": "runs/dtw_sammon_rawz_angle_only_060000",
       "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
-        "processed"
+        "processed",
+        "student_head"
       ]
     }
   ]

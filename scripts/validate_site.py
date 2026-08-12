@@ -26,7 +26,7 @@ def main() -> None:
             raise RuntimeError(f"manifest provenance mismatch: {run['id']}")
         if run["id"] in expected_features and manifest["features"] != expected_features[run["id"]]:
             raise RuntimeError("baseline feature contract mismatch")
-        if run["id"] != "baseline_060000" and manifest["features"] not in (["processed"], ["action"]):
+        if run["id"] != "baseline_060000" and manifest["features"] not in (["processed"], ["student_head"], ["processed", "student_head"], ["action"]):
             raise RuntimeError(f"feature contract mismatch: {run['id']}")
         for feature, filename in manifest["points_files"].items():
             payload = load(ROOT / run["path"] / filename)

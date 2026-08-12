@@ -266,6 +266,7 @@ def write_profiles() -> None:
         "rkd_raw_mu_distance_angle_1to1_060000": policy_profile("TimewarpVAE raw_mu", "0.3 to 0 cosine", 1.0, 1.0, "processed output"),
         "rkd_raw_mu_distance_only_060000": policy_profile("TimewarpVAE raw_mu", "0.3 to 0 cosine", 1.0, 0.0, "processed output"),
         "rkd_raw_mu_angle_only_060000": policy_profile("TimewarpVAE raw_mu", "0.3 to 0 cosine", 0.0, 1.0, "processed output"),
+        "dtw_sammon_rawz_angle_only_060000": policy_profile("FlatAE-DTW Sammon raw_z", "1.0 to 0 cosine", 0.0, 1.0, "Processed-H + trained StudentHead output"),
         "timewarp_vae_raw_mu": {"facts": [["Latent", "posterior mean mu"], ["Dimension", "32"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen TimewarpVAE target tensor", "sources": [str(VAE_TARGETS)]},
         "timewarp_vae_unit_mu": {"facts": [["Latent", "L2-normalized posterior mean"], ["Dimension", "32"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen TimewarpVAE target tensor", "sources": [str(VAE_TARGETS)]},
         "plain_ae_raw_z": {"facts": [["Model", "PlainAE (Flat encoder)"], ["Geometry loss", "none"], ["Latent", "raw z / 32D"], ["Published feature", "action only"]], "phases": [], "source_label": "frozen Rel-AE checkpoint", "sources": ["/home/ext_minje/groot_robocasa_V2/RelVAE_ckpt/mg_gr00t_300/flat_ae_z32_fh128_dh512/checkpoint-step-20000"]},

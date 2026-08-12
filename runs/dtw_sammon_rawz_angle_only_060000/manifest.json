@@ -6,10 +6,12 @@
   "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
   "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
   "features": [
-    "processed"
+    "processed",
+    "student_head"
   ],
   "points_files": {
-    "processed": "points_processed.json"
+    "processed": "points_processed.json",
+    "student_head": "points_student_head.json"
   },
   "sequences_file": "../../data/sequences.json",
   "fps": 20,
@@ -24,6 +26,19 @@
       "points": 7200,
       "pooling": "backbone_attention_mask mean",
       "feature": "processed"
+    },
+    "student_head": {
+      "checkpoint": "/home/ext_minje/groot_robocasa-kitchen/train_ckpt/rkd/Rel-AE/DTW-Sammon/RawZ/AngleOnly/checkpoint-60000",
+      "config_sha256": "83dee2a2e6c6da3efd880b8f2bab2a0183a0bc2910781cad45c3384972898b77",
+      "index_sha256": "b06d869be84c97d2ec0ca72f66e6ecc0c8e68d989508a693fbbdc6d33ec9c7c1",
+      "dataset_statistics_sha256": "5b697ed76c816825ebd0590fbbe4696ad9e62a719fb5f3bcb861e251ebd8fecd",
+      "manifest": "/home/ext_minje/groot_robocasa-kitchen/offline test/manifests/kitchen_24task_ep10_desc3_seed42_frame30_v1/manifest.json",
+      "manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "points": 7200,
+      "pooling": "checkpoint StudentAttentionHead (token MLP + masked attention + out projection)",
+      "input_shape": [207, 2048],
+      "output_shape": [512],
+      "feature": "student_head"
     }
   }
 }

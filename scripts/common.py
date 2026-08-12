@@ -33,6 +33,7 @@ RUNS = {
     "rkd_raw_mu_distance_angle_1to1_060000": {"label": "RKD RawMu Distance:Angle 1:1 60K", "family": "RoboCasa-Kitchen Ckpt", "features": ["processed"]},
     "rkd_raw_mu_distance_only_060000": {"label": "RKD RawMu Distance Only 60K", "family": "RoboCasa-Kitchen Ckpt", "features": ["processed"]},
     "rkd_raw_mu_angle_only_060000": {"label": "RKD RawMu Angle Only 60K", "family": "RoboCasa-Kitchen Ckpt", "features": ["processed"]},
+    "dtw_sammon_rawz_angle_only_060000": {"label": "DTW-Sammon RawZ Angle Only", "family": "RoboCasa-Kitchen Ckpt", "features": ["processed", "student_head"]},
     "timewarp_vae_raw_mu": {"label": "TimewarpVAE RawMu", "family": "Action (TimewarpVAE)", "features": ["action"]},
     "timewarp_vae_unit_mu": {"label": "TimewarpVAE UnitMu", "family": "Action (TimewarpVAE)", "features": ["action"]},
     "plain_ae_raw_z": {"label": "PlainAE RawZ", "family": "Action (AE / PCA)", "features": ["action"]},
