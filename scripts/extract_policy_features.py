@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib
 import json
 import os
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -27,6 +29,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--dataset-root", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--n17-project", type=Path, required=True, help="Isaac-GR00T-N1.7 checkout")
+    parser.add_argument("--modality-config", type=Path, required=True, help="Kitchen modality config registered at training time")
     parser.add_argument("--feature", choices=["raw", "processed"], action="append", required=True)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--progress-every", type=int, default=10)
@@ -42,6 +46,17 @@ def main() -> None:
     if len(rows) != 7200 or [int(row["point_id"]) for row in rows] != list(range(7200)):
         raise RuntimeError("manifest point contract mismatch")
     output_dir.mkdir(parents=True, exist_ok=True)
+    project_root = args.n17_project.expanduser().resolve()
+    modality_path = args.modality_config.expanduser().resolve()
+    if not (project_root / "clvla" / "rkd_summary_patch.py").is_file():
+        raise FileNotFoundError(f"N1.7 summary patch missing: {project_root}")
+    if not modality_path.is_file():
+        raise FileNotFoundError(f"modality config missing: {modality_path}")
+    sys.path.insert(0, str(project_root))
+    from clvla.rkd_summary_patch import apply_rkd_summary_patch
+    apply_rkd_summary_patch()
+    sys.path.insert(0, str(modality_path.parent))
+    importlib.import_module(modality_path.stem)
     for feature in args.feature:
         if (output_dir / f"features_{feature}.npz").exists() or (output_dir / f"features_{feature}.source.json").exists():
             raise FileExistsError(f"refusing to overwrite {output_dir}/features_{feature}")
@@ -85,11 +100,17 @@ def main() -> None:
     ids_array = np.asarray(ids, dtype=np.int64)
     if not np.array_equal(ids_array, np.arange(7200)):
         raise RuntimeError("output point identity mismatch")
+    stats_candidates = [checkpoint / "experiment_cfg/dataset_statistics.json", checkpoint / "statistics.json"]
+    stats_path = next((path for path in stats_candidates if path.is_file()), None)
+    if stats_path is None:
+        raise FileNotFoundError(f"no checkpoint statistics file under {checkpoint}")
     source = {
         "checkpoint": str(checkpoint),
         "config_sha256": sha256_file(checkpoint / "config.json"),
         "index_sha256": sha256_file(checkpoint / "model.safetensors.index.json"),
-        "dataset_statistics_sha256": sha256_file(checkpoint / "experiment_cfg/dataset_statistics.json"),
+        "dataset_statistics_path": str(stats_path),
+        "dataset_statistics_sha256": sha256_file(stats_path),
+        "summary_token_patch": "clvla.rkd_summary_patch.apply_rkd_summary_patch",
         "manifest": str(manifest_path),
         "manifest_sha256": sha256_file(manifest_path),
         "points": 7200,
