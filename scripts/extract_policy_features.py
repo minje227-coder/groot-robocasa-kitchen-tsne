@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--n17-project", type=Path, required=True, help="Isaac-GR00T-N1.7 checkout")
     parser.add_argument("--modality-config", type=Path, required=True, help="Kitchen modality config registered at training time")
-    parser.add_argument("--feature", choices=["raw", "processed"], action="append", required=True)
+    parser.add_argument("--feature", choices=["raw", "processed", "summary"], action="append", required=True)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--progress-every", type=int, default=10)
     return parser.parse_args()
@@ -90,10 +90,16 @@ def main() -> None:
             raw = backbone_outputs["backbone_features"]
             pooled = (raw.float() * mask.unsqueeze(-1)).sum(1) / mask.sum(1, keepdim=True).clamp_min(1)
             outputs["raw"].append(pooled.cpu().numpy())
-        if "processed" in outputs:
+        if "processed" in outputs or "summary" in outputs:
             processed = model.action_head._encode_features(backbone_outputs, action_inputs)["backbone_features"]
-            pooled = (processed.float() * mask.unsqueeze(-1)).sum(1) / mask.sum(1, keepdim=True).clamp_min(1)
-            outputs["processed"].append(pooled.cpu().numpy())
+            if "processed" in outputs:
+                pooled = (processed.float() * mask.unsqueeze(-1)).sum(1) / mask.sum(1, keepdim=True).clamp_min(1)
+                outputs["processed"].append(pooled.cpu().numpy())
+            if "summary" in outputs:
+                summary = backbone_outputs.get("rkd_summary")
+                if summary is None:
+                    raise RuntimeError("summary feature requested but checkpoint did not produce rkd_summary")
+                outputs["summary"].append(summary.float().cpu().numpy())
         ids.extend(int(row["point_id"]) for row in by_episode[episode_index])
         if episode_rank % args.progress_every == 0:
             print(f"FEATURE_PROGRESS episodes={episode_rank}/240 points={len(ids)}/7200", flush=True)

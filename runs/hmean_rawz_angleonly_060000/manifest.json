@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "id": "hmean_rawz_angleonly_060000",
+  "label": "HMean RawZ Angle Only 60K",
+  "family": "RoboCasa-Kitchen Ckpt",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "processed"
+  ],
+  "points_files": {
+    "processed": "points_processed.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "processed": {
+      "checkpoint": "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/Rel-AE/DTW-Uniform/RawZ/HMean/AngleOnly/DTWUniform_RawZ_HMean_AngleOnly/checkpoint-60000",
+      "config_sha256": "6f59e506d1fa8df119b3c85d7e82b59d35e9d2bf118131fa1d8771ea2affdb8f",
+      "index_sha256": "12117379d91d029c5979a585d07ba794001730c9516d6de5512e3dedfee30730",
+      "dataset_statistics_path": "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/Rel-AE/DTW-Uniform/RawZ/HMean/AngleOnly/DTWUniform_RawZ_HMean_AngleOnly/checkpoint-60000/experiment_cfg/dataset_statistics.json",
+      "dataset_statistics_sha256": "4a078e8fd306aa50e1218c7aa9e7ffd4ce16a1d55430e7b9c5f07350418dc8c3",
+      "summary_token_patch": "clvla.rkd_summary_patch.apply_rkd_summary_patch",
+      "manifest": "/home/work/workspace/test/seonho/groot-robocasa-kitchen-tsne/data/official_manifest.json",
+      "manifest_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "points": 7200,
+      "pooling": "backbone_attention_mask mean",
+      "feature": "processed"
+    }
+  }
+}

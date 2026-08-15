@@ -157,6 +157,16 @@
       "features": [
         "processed"
       ]
+    },
+    {
+      "id": "hmean_rawz_angleonly_060000",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "HMean RawZ Angle Only 60K",
+      "path": "runs/hmean_rawz_angleonly_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
     }
   ]
 }

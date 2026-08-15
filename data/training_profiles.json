@@ -543,6 +543,60 @@
       "sources": [
         "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/Rel-AE/DTW-Uniform/RawZ/SummaryToken/AngleOnly/checkpoint-60000"
       ]
+    },
+    "hmean_rawz_angleonly_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Student pool",
+          "Masked mean of processed H"
+        ],
+        [
+          "Teacher target",
+          "FlatAE-DTW RawZ"
+        ],
+        [
+          "Published feature",
+          "processed H"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [
+        {
+          "name": "Fine-tuning",
+          "range": "step 0 to 60K",
+          "badge": "RKD ON",
+          "enabled": true,
+          "rows": [
+            [
+              "RKD schedule",
+              "configured Angle Only"
+            ],
+            [
+              "Distance weight",
+              "0.0"
+            ],
+            [
+              "Angle weight",
+              "1.0"
+            ],
+            [
+              "Summary token",
+              "none (no readout head)"
+            ]
+          ]
+        }
+      ],
+      "source_label": "checkpoint hashes + h_mean student pool",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/Rel-AE/DTW-Uniform/RawZ/HMean/AngleOnly/DTWUniform_RawZ_HMean_AngleOnly/checkpoint-60000"
+      ]
     }
   }
 }
