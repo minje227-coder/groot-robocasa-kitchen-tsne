@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract N1.7 CSN processed-H with the appended SummaryToken contract."""
+"""Extract N1.7 CSN processed-H and canonical 128D masked projector views."""
 from __future__ import annotations
 
 import argparse
@@ -43,7 +43,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n17-project", type=Path, required=True)
     parser.add_argument("--modality-config", type=Path, required=True)
     parser.add_argument("--csn-config", type=Path, required=True)
-    parser.add_argument("--feature", choices=["processed"], action="append", required=True)
+    parser.add_argument(
+        "--feature",
+        choices=["processed", "projected_norm", "state_masked", "action_masked"],
+        action="append",
+        required=True,
+    )
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--progress-every", type=int, default=10)
     parser.add_argument("--batch-size", type=int, default=32)
@@ -114,6 +119,14 @@ def main() -> None:
         raise RuntimeError("loaded CSN checkpoint is missing action_head.rscl_summary_token")
     if not hasattr(model, "rscl_projector"):
         raise RuntimeError("loaded CSN checkpoint is missing rscl_projector")
+    projector_features = {"projected_norm", "state_masked", "action_masked"}
+    if projector_features.intersection(args.feature):
+        if int(csn_cfg.get("projector_output_dim", 0)) != 128:
+            raise RuntimeError("CSN projector output contract must be 128D")
+    if "state_masked" in args.feature and not hasattr(model, "csn_state_mask_beta"):
+        raise RuntimeError("state_masked requested but checkpoint has no state mask")
+    if "action_masked" in args.feature and not hasattr(model, "csn_action_mask_beta"):
+        raise RuntimeError("action_masked requested but checkpoint has no action mask")
     summary_token = model.action_head.rscl_summary_token.detach().float().cpu().numpy()
     summary_hash = hashlib.sha256(summary_token.tobytes()).hexdigest()
     print(
@@ -123,6 +136,45 @@ def main() -> None:
         f"sha256_float32={summary_hash}",
         flush=True,
     )
+
+    mask_diagnostics = None
+    state_mask_device = None
+    action_mask_device = None
+    if hasattr(model, "csn_state_mask_beta"):
+        state_raw = model.csn_state_mask_beta.detach().float()
+        state_mask_device = torch.relu(state_raw)
+    if hasattr(model, "csn_action_mask_beta"):
+        action_raw = model.csn_action_mask_beta.detach().float()
+        action_mask_device = torch.relu(action_raw)
+    if state_mask_device is not None and action_mask_device is not None:
+        state_cpu = state_mask_device.cpu()
+        action_cpu = action_mask_device.cpu()
+        state_active = state_cpu > 0
+        action_active = action_cpu > 0
+        intersection = state_active & action_active
+        union = state_active | action_active
+        cosine = torch.nn.functional.cosine_similarity(state_cpu, action_cpu, dim=0)
+        state_top16 = set(torch.topk(state_cpu, 16).indices.tolist())
+        action_top16 = set(torch.topk(action_cpu, 16).indices.tolist())
+        mask_diagnostics = {
+            "version": 1,
+            "dimension": 128,
+            "activation": "relu",
+            "state_effective": [round(float(value), 8) for value in state_cpu.tolist()],
+            "action_effective": [round(float(value), 8) for value in action_cpu.tolist()],
+            "state_active": int(state_active.sum()),
+            "action_active": int(action_active.sum()),
+            "intersection": int(intersection.sum()),
+            "union": int(union.sum()),
+            "jaccard": float(intersection.sum() / union.sum()),
+            "cosine": float(cosine),
+            "state_rms": float(state_cpu.square().mean().sqrt()),
+            "action_rms": float(action_cpu.square().mean().sqrt()),
+            "top16_intersection": len(state_top16 & action_top16),
+        }
+        (output_dir / "mask_diagnostics.json").write_text(
+            json.dumps(mask_diagnostics, indent=2) + "\n"
+        )
 
     loader = LeRobotEpisodeLoader(dataset_path=dataset_root, modality_configs=policy.modality_configs)
     by_episode = defaultdict(list)
@@ -177,6 +229,22 @@ def main() -> None:
         if "processed" in outputs:
             pooled = (processed.float() * mask.unsqueeze(-1)).sum(1) / mask.sum(1, keepdim=True).clamp_min(1)
             outputs["processed"].append(pooled.cpu().numpy())
+        if projector_features.intersection(outputs):
+            projected_norm = torch.nn.functional.normalize(
+                model.rscl_projector(summary).float(), dim=-1
+            )
+            if projected_norm.shape[1] != 128:
+                raise RuntimeError(f"unexpected projected shape: {tuple(projected_norm.shape)}")
+            if "projected_norm" in outputs:
+                outputs["projected_norm"].append(projected_norm.cpu().numpy())
+            if "state_masked" in outputs:
+                outputs["state_masked"].append(
+                    (projected_norm * state_mask_device.to(projected_norm.device)).cpu().numpy()
+                )
+            if "action_masked" in outputs:
+                outputs["action_masked"].append(
+                    (projected_norm * action_mask_device.to(projected_norm.device)).cpu().numpy()
+                )
         ids.extend(pending_ids)
         pending_rows.clear()
         pending_ids.clear()
@@ -234,8 +302,7 @@ def main() -> None:
         "points": int(expected_points),
         "episodes": int(len(ordered)),
         "batch_size": args.batch_size,
-        "feature_dim": 2048,
-        "pooling": "valid-token masked mean of CSN processed H after appended SummaryToken -> vlln -> vl_self_attention; summary output excluded",
+        "pooling": "CSN appended SummaryToken output; processed H view uses valid-token masked mean and excludes SummaryToken",
         "summary_token": {
             "position": "append",
             "checkpoint_key": "action_head.rscl_summary_token",
@@ -244,14 +311,46 @@ def main() -> None:
         },
         "adapter_parity": parity,
     }
+    dimensions = {
+        "processed": 2048,
+        "projected_norm": 128,
+        "state_masked": 128,
+        "action_masked": 128,
+    }
+    contracts = {
+        "processed": "valid-token masked mean of processed H; appended SummaryToken output excluded",
+        "projected_norm": "L2-normalized rscl_projector output of the appended SummaryToken",
+        "state_masked": "projected_norm multiplied by ReLU(csn_state_mask_beta); no post-mask renormalization",
+        "action_masked": "projected_norm multiplied by ReLU(csn_action_mask_beta); no post-mask renormalization",
+    }
     for feature, chunks in outputs.items():
         values = np.concatenate(chunks).astype(np.float32)
+        if values.shape != (expected_points, dimensions[feature]) or not np.isfinite(values).all():
+            raise RuntimeError(f"invalid {feature} output: {values.shape} {values.dtype}")
         partial = output_dir / f"features_{feature}.partial.npz"
         np.savez_compressed(partial, features=values, point_id=ids_array)
         os.replace(partial, output_dir / f"features_{feature}.npz")
-        (output_dir / f"features_{feature}.source.json").write_text(json.dumps({**source, "feature": feature}, indent=2) + "\n")
+        feature_source = {
+            **source,
+            "feature": feature,
+            "feature_dim": dimensions[feature],
+            "representation_contract": contracts[feature],
+        }
+        if mask_diagnostics is not None:
+            feature_source["mask_diagnostics_sha256"] = sha256_file(output_dir / "mask_diagnostics.json")
+        (output_dir / f"features_{feature}.source.json").write_text(
+            json.dumps(feature_source, indent=2) + "\n"
+        )
     peak_gib = torch.cuda.max_memory_reserved() / (1024 ** 3) if torch.cuda.is_available() else 0.0
-    (output_dir / "COMPLETE").write_text(json.dumps({"features": args.feature, "points": int(expected_points), "batch_size": args.batch_size, "summary_token_sha256_float32": summary_hash}) + "\n")
+    complete_payload = {
+        "features": args.feature,
+        "points": int(expected_points),
+        "batch_size": args.batch_size,
+        "summary_token_sha256_float32": summary_hash,
+    }
+    if mask_diagnostics is not None:
+        complete_payload["mask_diagnostics_sha256"] = sha256_file(output_dir / "mask_diagnostics.json")
+    (output_dir / "COMPLETE").write_text(json.dumps(complete_payload) + "\n")
     print(f"FEATURE_COMPLETE checkpoint={checkpoint} features={args.feature} points={expected_points} batch_size={args.batch_size} peak_reserved_gib={peak_gib:.2f} parity={json.dumps(parity, sort_keys=True)}", flush=True)
 
 

@@ -192,7 +192,21 @@ function toggleActionDim(dim, dimCount) {
 }
 
 const familyOrder = ["RoboCasa-Kitchen Ckpt", "TestV1", "Action (TimewarpVAE)", "Action (AE / PCA)"];
-const featureOrder = ["raw", "processed", "action"];
+const featureOrder = ["raw", "processed", "projected_norm", "state_masked", "action_masked", "action"];
+const featureLabels = {
+  projected_norm: "Z norm",
+  state_masked: "State Z",
+  action_masked: "Action Z",
+};
+const featureLongLabels = {
+  projected_norm: "Normalized projector Z (128D)",
+  state_masked: "State-masked Z (128D)",
+  action_masked: "Action-masked Z (128D)",
+};
+
+function featureLabel(feature, long = false) {
+  return (long ? featureLongLabels[feature] : featureLabels[feature]) || feature;
+}
 
 const kitchenTaskGroups = ["Cabinet", "Coffee", "Pick & Place", "Appliances", "Sink"];
 const kitchenTaskOrder = [
@@ -672,6 +686,44 @@ function attachPanelResize() {
   });
 }
 
+function renderMaskDiagnostics(diagnostics) {
+  const stateMask = diagnostics?.state_effective || [];
+  const actionMask = diagnostics?.action_effective || [];
+  if (stateMask.length !== 128 || actionMask.length !== 128) return null;
+  const maxValue = Math.max(1e-9, ...stateMask, ...actionMask);
+  const maskRow = (label, values, rgb) => el("div", { class: "mask-diagnostic-row" }, [
+    el("div", { class: "mask-diagnostic-label", text: label }),
+    el("div", { class: "mask-diagnostic-grid" }, values.map((value, index) => {
+      const alpha = value > 0 ? 0.16 + 0.84 * value / maxValue : 0.035;
+      return el("span", {
+        class: `mask-diagnostic-cell${value > 0 ? " active" : ""}`,
+        style: `background: rgba(${rgb}, ${alpha.toFixed(4)})`,
+        title: `dim ${index}: ${Number(value).toFixed(6)}`,
+      });
+    })),
+  ]);
+  const metrics = diagnostics.feature_metrics || {};
+  const metricRows = ["projected_norm", "state_masked", "action_masked"].flatMap((feature) => {
+    const item = metrics[feature];
+    if (!item) return [];
+    return [el("div", { class: "mask-feature-metric" }, [
+      el("strong", { text: featureLabel(feature) }),
+      el("span", { text: `${item.retained_dimensions}D · rank ${Number(item.effective_rank).toFixed(1)} · norm ${Number(item.sample_norm_mean).toFixed(3)}` }),
+    ])];
+  });
+  return el("section", { class: "mask-diagnostic" }, [
+    el("div", { class: "mask-diagnostic-head" }, [
+      el("h4", { text: "CSN mask · 128D" }),
+      el("span", { text: `shared ${diagnostics.intersection}/128` }),
+    ]),
+    maskRow(`State · ${diagnostics.state_active} active`, stateMask, "14, 116, 144"),
+    maskRow(`Action · ${diagnostics.action_active} active`, actionMask, "234, 88, 12"),
+    el("div", { class: "mask-diagnostic-summary", text: `Jaccard ${Number(diagnostics.jaccard).toFixed(3)} · cosine ${Number(diagnostics.cosine).toFixed(3)} · Top-16 shared ${diagnostics.top16_intersection}` }),
+    el("div", { class: "mask-feature-metrics" }, metricRows),
+    el("p", { class: "mask-diagnostic-note", text: "Fixed checkpoint gates. Cell intensity is the effective ReLU weight; masked views are not renormalized." }),
+  ]);
+}
+
 function renderActiveModelDetails() {
   const activeRunIds = [...new Set(state.selectedCharts.map((chart) => chart.runId))];
   const activeSet = new Set(activeRunIds);
@@ -701,7 +753,7 @@ function renderActiveModelDetails() {
       el("span", { class: "model-profile-caret", text: isOpen ? "▾" : "▸" }),
       el("span", { class: "model-profile-title", text: run.label || run.id }),
       el("span", { class: "model-profile-features" }, features.map((feature) =>
-        el("span", { class: "model-profile-feature", text: feature })
+        el("span", { class: "model-profile-feature", text: featureLabel(feature) })
       )),
     ]);
 
@@ -748,8 +800,11 @@ function renderActiveModelDetails() {
       header,
       el("div", { class: "model-profile-body" + (isOpen ? " open" : "") }, [
         facts,
-        el("h4", { class: "phase-heading", text: "Phase timeline" }),
-        phases,
+        ...(profile.mask_diagnostics ? [renderMaskDiagnostics(profile.mask_diagnostics)] : []),
+        ...((profile.phases || []).length ? [
+          el("h4", { class: "phase-heading", text: "Phase timeline" }),
+          phases,
+        ] : []),
         source,
       ]),
     ])];
@@ -820,8 +875,8 @@ function renderRunFeatureToggle(run) {
   return el("div", { class: "run-feature-toggle" }, (run.features || []).map((feature) =>
     el("button", {
       class: `mini-btn run-feature-btn${hasChart(run.id, feature) ? " active" : ""}`,
-      text: feature,
-      title: `${run.label || run.id} ${feature}`,
+      text: featureLabel(feature),
+      title: `${run.label || run.id} · ${featureLabel(feature, true)}`,
       onclick: (event) => toggleRunFeature(run, feature, event),
     })
   ));
@@ -1613,7 +1668,7 @@ function renderCharts() {
   }
   for (const chart of state.selectedCharts) {
     const run = getRunById(chart.runId);
-    const label = `${run?.label || chart.runId} / ${chart.feature}`;
+    const label = `${run?.label || chart.runId} / ${featureLabel(chart.feature, true)}`;
     const card = el("section", {
       class: "chart-card",
       "data-chart": chartKey(chart.runId, chart.feature),

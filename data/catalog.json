@@ -216,7 +216,10 @@
       "path": "runs/testv1_csn_jointsubspace_beta1_060000",
       "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
-        "processed"
+        "processed",
+        "projected_norm",
+        "state_masked",
+        "action_masked"
       ]
     },
     {
@@ -226,7 +229,10 @@
       "path": "runs/testv1_csn_jointsubspace_betaa03_060000",
       "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
-        "processed"
+        "processed",
+        "projected_norm",
+        "state_masked",
+        "action_masked"
       ]
     }
   ]

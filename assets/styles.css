@@ -401,6 +401,106 @@ body.resizing-panel {
   overflow-wrap: anywhere;
 }
 
+.mask-diagnostic {
+  border: 1px solid #d7e0e8;
+  border-radius: 7px;
+  background: #ffffff;
+  margin-top: 9px;
+  padding: 8px;
+}
+
+.mask-diagnostic-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.mask-diagnostic-head h4 {
+  color: #334e68;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.mask-diagnostic-head span {
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 9px;
+  font-weight: 750;
+  padding: 2px 6px;
+}
+
+.mask-diagnostic-row + .mask-diagnostic-row {
+  margin-top: 7px;
+}
+
+.mask-diagnostic-label {
+  color: #52677a;
+  font-size: 9px;
+  font-weight: 750;
+  margin-bottom: 3px;
+}
+
+.mask-diagnostic-grid {
+  display: grid;
+  grid-template-columns: repeat(32, minmax(0, 1fr));
+  gap: 1px;
+}
+
+.mask-diagnostic-cell {
+  aspect-ratio: 1;
+  border-radius: 1px;
+  outline: 1px solid rgba(148, 163, 184, 0.08);
+  min-height: 4px;
+}
+
+.mask-diagnostic-cell.active {
+  outline-color: rgba(71, 85, 105, 0.12);
+}
+
+.mask-diagnostic-summary {
+  color: #334155;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 8px;
+  line-height: 1.4;
+  margin-top: 7px;
+}
+
+.mask-feature-metrics {
+  border-top: 1px solid #e5eaf0;
+  display: grid;
+  gap: 3px;
+  margin-top: 7px;
+  padding-top: 6px;
+}
+
+.mask-feature-metric {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 6px;
+  font-size: 8px;
+}
+
+.mask-feature-metric strong {
+  color: #334155;
+}
+
+.mask-feature-metric span {
+  color: #64748b;
+  text-align: right;
+}
+
+.mask-diagnostic-note {
+  color: #718096;
+  font-size: 8px;
+  line-height: 1.35;
+  margin: 7px 0 0;
+}
+
 .run-btn strong {
   display: block;
 }

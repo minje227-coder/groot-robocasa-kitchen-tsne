@@ -19,8 +19,8 @@ Live site: <https://minje227-coder.github.io/groot-robocasa-kitchen-tsne/>
 | RS-CL JointShared βs,βa=1 (TestV1) | processed H |
 | RS-CL JointShared βs=1,βa=0.3 (TestV1) | processed H |
 | CSN StateOnly βs=1 (TestV1) | processed H |
-| CSN JointSubspace βs,βa=1 (TestV1) | processed H |
-| CSN JointSubspace βs=1,βa=0.3 (TestV1) | processed H |
+| CSN JointSubspace βs,βa=1 (TestV1) | processed H + normalized projector Z + state/action-masked Z |
+| CSN JointSubspace βs=1,βa=0.3 (TestV1) | processed H + normalized projector Z + state/action-masked Z |
 | TimewarpVAE RawMu | action-only posterior `mu` |
 | TimewarpVAE UnitMu | action-only L2-normalized `mu` |
 
@@ -28,7 +28,9 @@ All charts use the same `kitchen_24task_ep10_desc3_seed42_frame30_v1` manifest: 
 
 ## Embedding recipe
 
-Each feature matrix is independently filtered for constant dimensions, z-scored, reduced with PCA to at most 50 dimensions, then embedded with t-SNE using perplexity 30, 1,000 iterations, and seed 42.
+General feature matrices are independently filtered for constant dimensions, z-scored, reduced with PCA to at most 50 dimensions, then embedded with t-SNE using perplexity 30, 1,000 iterations, and seed 42.
+
+CSN-only views follow the checkpoint's canonical path: appended SummaryToken output -> 128D projector -> L2 normalization -> static `ReLU(state/action mask)`, without post-mask renormalization. Their t-SNE preprocessing deliberately omits per-dimension z-scoring so learned mask magnitudes are not canceled; it uses constant filtering, centered PCA up to 50D, perplexity 30, 1,000 iterations, and seed 42. The model profile shows the 128D mask heatmaps, active/support overlap, RMS, effective rank, and mean sample norm.
 
 The browser UI is shared with [`groot-insight-tsne`](https://github.com/minje227-coder/groot-insight-tsne), while manifests, task grouping, cameras, model profiles, features, and clips are RoboCasa-Kitchen-specific.
 

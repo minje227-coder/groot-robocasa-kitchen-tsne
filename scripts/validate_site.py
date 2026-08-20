@@ -19,21 +19,35 @@ def main() -> None:
     sequences = load(ROOT / "data/sequences.json")["sequences"]
     if official["source_manifest_sha256"] != EXPECTED_SHA or len(official["samples"]) != 7200 or len(sequences) != 240:
         raise RuntimeError("official manifest contract mismatch")
-    expected_features = {"baseline_060000": ["raw", "processed"]}
+    csn_views = ["processed", "projected_norm", "state_masked", "action_masked"]
+    expected_features = {
+        "baseline_060000": ["raw", "processed"],
+        "testv1_csn_jointsubspace_beta1_060000": csn_views,
+        "testv1_csn_jointsubspace_betaa03_060000": csn_views,
+    }
     for run in catalog["runs"]:
         manifest = load(ROOT / run["path"] / "manifest.json")
         if manifest["manifest_id"] != official["manifest_id"] or manifest["source_manifest_sha256"] != EXPECTED_SHA:
             raise RuntimeError(f"manifest provenance mismatch: {run['id']}")
         if run["id"] in expected_features and manifest["features"] != expected_features[run["id"]]:
-            raise RuntimeError("baseline feature contract mismatch")
-        if run["id"] != "baseline_060000" and manifest["features"] not in (["processed"], ["student_head"], ["processed", "student_head"], ["action"]):
+            raise RuntimeError(f"expected feature contract mismatch: {run['id']}")
+        if run["id"] not in expected_features and manifest["features"] not in (["processed"], ["student_head"], ["processed", "student_head"], ["action"]):
             raise RuntimeError(f"feature contract mismatch: {run['id']}")
+        if run["id"] in expected_features and run["id"].startswith("testv1_csn_jointsubspace"):
+            diagnostic = load(ROOT / run["path"] / manifest.get("diagnostics_file", ""))
+            if diagnostic.get("dimension") != 128 or len(diagnostic.get("state_effective", [])) != 128 or len(diagnostic.get("action_effective", [])) != 128:
+                raise RuntimeError(f"CSN diagnostic contract mismatch: {run['id']}")
         for feature, filename in manifest["points_files"].items():
             payload = load(ROOT / run["path"] / filename)
             if payload["point_count"] != 7200 or len(payload["points"]) != 7200:
                 raise RuntimeError(f"point count mismatch: {run['id']}/{feature}")
             if {int(point[2]) for point in payload["points"]} != set(range(240)):
                 raise RuntimeError(f"sequence coverage mismatch: {run['id']}/{feature}")
+            if feature in {"projected_norm", "state_masked", "action_masked"}:
+                if payload.get("retained_input_dims") not in range(1, 129) or payload.get("preprocessing") != "constant-filter -> centered PCA<=50 without per-dimension scaling -> t-SNE":
+                    raise RuntimeError(f"CSN embedding contract mismatch: {run['id']}/{feature}")
+                if any(len(point) != 6 for point in payload["points"]):
+                    raise RuntimeError(f"CSN point schema mismatch: {run['id']}/{feature}")
     clips = list((ROOT / f"assets/clips/{official['manifest_id']}").glob("seq_*/*.mp4"))
     if len(clips) != 720 or any(path.stat().st_size == 0 for path in clips):
         raise RuntimeError(f"video contract mismatch: {len(clips)}")
