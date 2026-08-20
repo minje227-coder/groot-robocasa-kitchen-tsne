@@ -1,6 +1,6 @@
 # GR00T RoboCasa-Kitchen t-SNE
 
-Interactive, manifest-aligned t-SNE viewer for seven GR00T N1.7 RoboCasa-Kitchen checkpoints and two TimewarpVAE action latents.
+Interactive, manifest-aligned t-SNE viewer for GR00T N1.7 RoboCasa-Kitchen checkpoints and action representations.
 
 Live site: <https://minje227-coder.github.io/groot-robocasa-kitchen-tsne/>
 
@@ -15,6 +15,12 @@ Live site: <https://minje227-coder.github.io/groot-robocasa-kitchen-tsne/>
 | RKD RawMu Distance Only 60K | processed output |
 | RKD RawMu Angle Only 60K | processed output |
 | DTW-Sammon RawZ Angle Only | Processed-H + trained StudentHead output |
+| RS-CL ParityState βs=1 (TestV1) | processed H |
+| RS-CL JointShared βs,βa=1 (TestV1) | processed H |
+| RS-CL JointShared βs=1,βa=0.3 (TestV1) | processed H |
+| CSN StateOnly βs=1 (TestV1) | processed H |
+| CSN JointSubspace βs,βa=1 (TestV1) | processed H |
+| CSN JointSubspace βs=1,βa=0.3 (TestV1) | processed H |
 | TimewarpVAE RawMu | action-only posterior `mu` |
 | TimewarpVAE UnitMu | action-only L2-normalized `mu` |
 

@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "id": "testv1_csn_jointsubspace_beta1_060000",
+  "label": "CSN JointSubspace βs,βa=1",
+  "family": "TestV1",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "processed"
+  ],
+  "points_files": {
+    "processed": "points_processed.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "processed": {
+      "checkpoint": "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002/checkpoint-60000",
+      "config_sha256": "fa38aec8c191b6d63981dd425a41a3ec2f23a10b697ecd305dcce903599e4bff",
+      "index_sha256": "0387a8cdefd7ba5a1348d7bdf5f85f231cf72da47ee3ecefacc00093455ac8c5",
+      "csn_patch": "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/csn_patch.py",
+      "csn_patch_sha256": "e715eb805d60fe027079bc79f1dbb00e562f94c3fd59d3dfabb15fdbda92466a",
+      "csn_config": "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/cfg/CSN_JointSubspace.yaml",
+      "csn_config_sha256": "c2dd0ce76576ef79b839e09eeb766686eafe91f068be9738f5383f7455b9f926",
+      "manifest": "/home/work/workspace/test/seonho/groot-robocasa-kitchen-tsne/data/official_manifest.json",
+      "manifest_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "points": 7200,
+      "episodes": 240,
+      "batch_size": 1344,
+      "feature_dim": 2048,
+      "pooling": "valid-token masked mean of CSN processed H after appended SummaryToken -> vlln -> vl_self_attention; summary output excluded",
+      "summary_token": {
+        "position": "append",
+        "checkpoint_key": "action_head.rscl_summary_token",
+        "shape": [
+          1,
+          1,
+          2048
+        ],
+        "sha256_float32": "0b485216fd16e21dca86f5c6dcc9f121e59c6b6eff6cdc6ad240b635dc73ac4e"
+      },
+      "adapter_parity": {
+        "processed_max_abs": 0.0,
+        "summary_max_abs": 0.0,
+        "summary_shape": [
+          1344,
+          2048
+        ],
+        "processed_shape": [
+          1344,
+          218,
+          2048
+        ],
+        "raw_shape": [
+          1344,
+          218,
+          2048
+        ]
+      },
+      "feature": "processed",
+      "dataset_statistics_path": "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002/checkpoint-60000/experiment_cfg/dataset_statistics.json",
+      "dataset_statistics_sha256": "4a078e8fd306aa50e1218c7aa9e7ffd4ce16a1d55430e7b9c5f07350418dc8c3",
+      "dataset_root": "/home/work/workspace/test/seonho/robocasa_mg_gr00t_300",
+      "dataset_metadata_path": "/home/work/workspace/test/seonho/robocasa_mg_gr00t_300/meta/info.json",
+      "dataset_metadata_sha256": "c09b14f32823981d5afe5d306088f0121fc376e91a872a8f80a341f37303522e",
+      "modality_config": "/home/work/workspace/test/seonho/clvla/benchmarks/Robocasa-Kitchen/robocasa_config.py",
+      "modality_config_sha256": "d3d6105789bb27d8042893f6ec396c0ce7dd7acbd90e8e2e06b0e73a45ab8fe0"
+    }
+  }
+}

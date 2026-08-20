@@ -2,6 +2,7 @@
   "version": 2,
   "families": [
     "RoboCasa-Kitchen Ckpt",
+    "TestV1",
     "Action (TimewarpVAE)",
     "Action (AE / PCA)"
   ],
@@ -163,6 +164,66 @@
       "family": "RoboCasa-Kitchen Ckpt",
       "label": "HMean RawZ Angle Only 60K",
       "path": "runs/hmean_rawz_angleonly_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "testv1_rscl_paritystate_beta1_060000",
+      "family": "TestV1",
+      "label": "RS-CL ParityState βs=1",
+      "path": "runs/testv1_rscl_paritystate_beta1_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "testv1_rscl_jointshared_beta1_060000",
+      "family": "TestV1",
+      "label": "RS-CL JointShared βs,βa=1",
+      "path": "runs/testv1_rscl_jointshared_beta1_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "testv1_rscl_jointshared_betaa03_060000",
+      "family": "TestV1",
+      "label": "RS-CL JointShared βs=1,βa=0.3",
+      "path": "runs/testv1_rscl_jointshared_betaa03_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "testv1_csn_stateonly_beta1_060000",
+      "family": "TestV1",
+      "label": "CSN StateOnly βs=1",
+      "path": "runs/testv1_csn_stateonly_beta1_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "testv1_csn_jointsubspace_beta1_060000",
+      "family": "TestV1",
+      "label": "CSN JointSubspace βs,βa=1",
+      "path": "runs/testv1_csn_jointsubspace_beta1_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "testv1_csn_jointsubspace_betaa03_060000",
+      "family": "TestV1",
+      "label": "CSN JointSubspace βs=1,βa=0.3",
+      "path": "runs/testv1_csn_jointsubspace_betaa03_060000",
       "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
       "features": [
         "processed"

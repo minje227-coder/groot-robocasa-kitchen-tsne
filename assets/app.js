@@ -191,7 +191,7 @@ function toggleActionDim(dim, dimCount) {
   renderPanel();
 }
 
-const familyOrder = ["RoboCasa-Kitchen Ckpt", "Action (TimewarpVAE)", "Action (AE / PCA)"];
+const familyOrder = ["RoboCasa-Kitchen Ckpt", "TestV1", "Action (TimewarpVAE)", "Action (AE / PCA)"];
 const featureOrder = ["raw", "processed", "action"];
 
 const kitchenTaskGroups = ["Cabinet", "Coffee", "Pick & Place", "Appliances", "Sink"];
@@ -246,6 +246,7 @@ function sortSelectedCharts() {
 
 const familyLabels = {
   "RoboCasa-Kitchen Ckpt": "RoboCasa-Kitchen Ckpt",
+  "TestV1": "TestV1",
   "Action (TimewarpVAE)": "Action (TimewarpVAE)",
   "Action (AE / PCA)": "Action (AE / PCA)",
 };

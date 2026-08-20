@@ -597,6 +597,258 @@
       "sources": [
         "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/Rel-AE/DTW-Uniform/RawZ/HMean/AngleOnly/DTWUniform_RawZ_HMean_AngleOnly/checkpoint-60000"
       ]
+    },
+    "testv1_rscl_paritystate_beta1_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "CSN mode",
+          "parity_state"
+        ],
+        [
+          "Relation temperature",
+          "βs=1"
+        ],
+        [
+          "Published feature",
+          "processed H / 2,048D"
+        ],
+        [
+          "Pooling",
+          "valid-token masked mean; SummaryToken output excluded"
+        ],
+        [
+          "Extraction batch",
+          "1,344 on H200"
+        ],
+        [
+          "Adapter parity",
+          "processed=0.0 / summary=0.0"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint hashes + CSN config + extraction parity",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_ParityState_AllOne_N1d7_Full_BS64_60K_Tau002/CSN_ParityState_AllOne_N1d7_Full_BS64_60K_Tau002/checkpoint-60000",
+        "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/cfg/CSN_ParityState_AllOne.yaml"
+      ]
+    },
+    "testv1_rscl_jointshared_beta1_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "CSN mode",
+          "joint_shared"
+        ],
+        [
+          "Relation temperature",
+          "βs=1, βa=1"
+        ],
+        [
+          "Published feature",
+          "processed H / 2,048D"
+        ],
+        [
+          "Pooling",
+          "valid-token masked mean; SummaryToken output excluded"
+        ],
+        [
+          "Extraction batch",
+          "1,344 on H200"
+        ],
+        [
+          "Adapter parity",
+          "processed=0.0 / summary=0.0"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint hashes + CSN config + extraction parity",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_JointShared_N1d7_Full_BS64_60K_Tau002/CSN_JointShared_N1d7_Full_BS64_60K_Tau002/checkpoint-60000",
+        "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/cfg/CSN_JointShared.yaml"
+      ]
+    },
+    "testv1_rscl_jointshared_betaa03_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "CSN mode",
+          "joint_shared"
+        ],
+        [
+          "Relation temperature",
+          "βs=1, βa=0.3"
+        ],
+        [
+          "Published feature",
+          "processed H / 2,048D"
+        ],
+        [
+          "Pooling",
+          "valid-token masked mean; SummaryToken output excluded"
+        ],
+        [
+          "Extraction batch",
+          "1,344 on H200"
+        ],
+        [
+          "Adapter parity",
+          "processed=0.0 / summary=0.0"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint hashes + CSN config + extraction parity",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_JointShared_N1d7_Full_BS64_60K_Tau002_BetaA03/CSN_JointShared_N1d7_Full_BS64_60K_Tau002_BetaA03/checkpoint-60000",
+        "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/cfg/CSN_JointShared_BetaA03.yaml"
+      ]
+    },
+    "testv1_csn_stateonly_beta1_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "CSN mode",
+          "state_only"
+        ],
+        [
+          "Relation temperature",
+          "βs=1"
+        ],
+        [
+          "Published feature",
+          "processed H / 2,048D"
+        ],
+        [
+          "Pooling",
+          "valid-token masked mean; SummaryToken output excluded"
+        ],
+        [
+          "Extraction batch",
+          "1,344 on H200"
+        ],
+        [
+          "Adapter parity",
+          "processed=0.0 / summary=0.0"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint hashes + CSN config + extraction parity",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_StateOnly_N1d7_Full_BS64_60K_Tau002/CSN_StateOnly_N1d7_Full_BS64_60K_Tau002/checkpoint-60000",
+        "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/cfg/CSN_StateOnly.yaml"
+      ]
+    },
+    "testv1_csn_jointsubspace_beta1_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "CSN mode",
+          "joint_csn"
+        ],
+        [
+          "Relation temperature",
+          "βs=1, βa=1"
+        ],
+        [
+          "Published feature",
+          "processed H / 2,048D"
+        ],
+        [
+          "Pooling",
+          "valid-token masked mean; SummaryToken output excluded"
+        ],
+        [
+          "Extraction batch",
+          "1,344 on H200"
+        ],
+        [
+          "Adapter parity",
+          "processed=0.0 / summary=0.0"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint hashes + CSN config + extraction parity",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002/checkpoint-60000",
+        "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/cfg/CSN_JointSubspace.yaml"
+      ]
+    },
+    "testv1_csn_jointsubspace_betaa03_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "CSN mode",
+          "joint_csn"
+        ],
+        [
+          "Relation temperature",
+          "βs=1, βa=0.3"
+        ],
+        [
+          "Published feature",
+          "processed H / 2,048D"
+        ],
+        [
+          "Pooling",
+          "valid-token masked mean; SummaryToken output excluded"
+        ],
+        [
+          "Extraction batch",
+          "1,344 on H200"
+        ],
+        [
+          "Adapter parity",
+          "processed=0.0 / summary=0.0"
+        ],
+        [
+          "Manifest",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint hashes + CSN config + extraction parity",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/CSN/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002_BetaA03/CSN_JointSubspace_N1d7_Full_BS64_60K_Tau002_BetaA03/checkpoint-60000",
+        "/home/work/workspace/test/seonho/clvla/Isaac-GR00T-N1.7/clvla/RA-SD/CSN/cfg/CSN_JointSubspace_BetaA03.yaml"
+      ]
     }
   }
 }
