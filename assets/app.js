@@ -192,13 +192,25 @@ function toggleActionDim(dim, dimCount) {
 }
 
 const familyOrder = ["RoboCasa-Kitchen Ckpt", "TestV1", "Action (TimewarpVAE)", "Action (AE / PCA)"];
-const featureOrder = ["raw", "processed", "projected_norm", "state_masked", "action_masked", "action"];
+const featureOrder = ["raw", "processed", "pre_vlln", "post_vlln", "vlm_cognition", "dit_kv_l36", "projected_norm", "state_masked", "action_masked", "action"];
 const featureLabels = {
+  raw: "Raw H",
+  processed: "Processed H",
+  pre_vlln: "Cognition pre",
+  post_vlln: "Cognition post",
+  vlm_cognition: "VLM Cognition",
+  dit_kv_l36: "DiT KV L36",
   projected_norm: "Z norm",
   state_masked: "State Z",
   action_masked: "Action Z",
 };
 const featureLongLabels = {
+  raw: "Raw VLM backbone H",
+  processed: "Processed bridge H",
+  pre_vlln: "RLDX cognition before the bridge processing boundary",
+  post_vlln: "RLDX cognition after the bridge processing boundary; source cache is bit-identical to pre",
+  vlm_cognition: "Xiaomi Robotics-1 VLM cognition output",
+  dit_kv_l36: "Xiaomi VLM key/value conditioning read by DiT layer 36 (masked mean of concatenated K and V)",
   projected_norm: "Normalized projector Z (128D)",
   state_masked: "State-masked Z (128D)",
   action_masked: "Action-masked Z (128D)",

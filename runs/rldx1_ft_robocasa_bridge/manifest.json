@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "id": "rldx1_ft_robocasa_bridge",
+  "label": "RLDX-1 FT RoboCasa",
+  "family": "RoboCasa-Kitchen Ckpt",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "pre_vlln",
+    "post_vlln"
+  ],
+  "points_files": {
+    "pre_vlln": "points_pre_vlln.json",
+    "post_vlln": "points_post_vlln.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "pre_vlln": {
+      "model": "RLDX-1 FT RoboCasa",
+      "hf_repo": "RLWRLD/RLDX-1-FT-ROBOCASA",
+      "hf_revision": "e8279a383be40b6d33e541a8628d22c9b8194a6c",
+      "hf_revision_url": "https://huggingface.co/RLWRLD/RLDX-1-FT-ROBOCASA/tree/e8279a383be40b6d33e541a8628d22c9b8194a6c",
+      "source_commit": "cf67c31f7f168ebbca6d06e8c3c23914cb94435c",
+      "source_feature_sha256": "e353d0c5807c5df34bbdbf11fd525c17af84ad525011591e6fcbb845ac4f8883",
+      "extraction_manifest_file_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "extraction_batch_size": 30,
+      "contract_id": "33c442ce0d49a74b077e48d8bbf82defa0964d81a9152e7420ab1187fa725d35",
+      "representation": "Native RLDX cognition before the bridge processing boundary",
+      "input_contract": "native processor.eval/collator; 3 RGB views x history [-6,-4,-2,0], current state, exact description",
+      "comparison_limit": "same anchor/state/action targets, but RLDX uses native 4-frame history while N1.5/N1.6 extraction used current frames",
+      "runtime_versions": {
+        "torch": "2.7.0",
+        "transformers": "4.57.0",
+        "diffusers": "0.35.1",
+        "albumentations": "1.4.18",
+        "numpy": "1.26.4",
+        "flash-attn": "not-installed"
+      },
+      "history_padding": "negative frame indices clamp to episode frame 0, matching padded sequence semantics",
+      "shape": [
+        7200,
+        4096
+      ],
+      "feature": "pre_vlln"
+    },
+    "post_vlln": {
+      "model": "RLDX-1 FT RoboCasa",
+      "hf_repo": "RLWRLD/RLDX-1-FT-ROBOCASA",
+      "hf_revision": "e8279a383be40b6d33e541a8628d22c9b8194a6c",
+      "hf_revision_url": "https://huggingface.co/RLWRLD/RLDX-1-FT-ROBOCASA/tree/e8279a383be40b6d33e541a8628d22c9b8194a6c",
+      "source_commit": "cf67c31f7f168ebbca6d06e8c3c23914cb94435c",
+      "source_feature_sha256": "e353d0c5807c5df34bbdbf11fd525c17af84ad525011591e6fcbb845ac4f8883",
+      "extraction_manifest_file_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "extraction_batch_size": 30,
+      "contract_id": "33c442ce0d49a74b077e48d8bbf82defa0964d81a9152e7420ab1187fa725d35",
+      "representation": "Native RLDX cognition after the bridge processing boundary; verified bit-identical to pre",
+      "input_contract": "native processor.eval/collator; 3 RGB views x history [-6,-4,-2,0], current state, exact description",
+      "comparison_limit": "same anchor/state/action targets, but RLDX uses native 4-frame history while N1.5/N1.6 extraction used current frames",
+      "runtime_versions": {
+        "torch": "2.7.0",
+        "transformers": "4.57.0",
+        "diffusers": "0.35.1",
+        "albumentations": "1.4.18",
+        "numpy": "1.26.4",
+        "flash-attn": "not-installed"
+      },
+      "history_padding": "negative frame indices clamp to episode frame 0, matching padded sequence semantics",
+      "shape": [
+        7200,
+        4096
+      ],
+      "feature": "post_vlln"
+    }
+  },
+  "notes": [
+    "Frozen representation t-SNE; no policy training or simulator evaluation."
+  ]
+}

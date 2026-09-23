@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "xiaomi_r1_robocasa_bridge",
+  "label": "Xiaomi Robotics-1 RoboCasa",
+  "family": "RoboCasa-Kitchen Ckpt",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "vlm_cognition",
+    "dit_kv_l36"
+  ],
+  "points_files": {
+    "vlm_cognition": "points_vlm_cognition.json",
+    "dit_kv_l36": "points_dit_kv_l36.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "vlm_cognition": {
+      "model": "Xiaomi Robotics-1 RoboCasa",
+      "hf_repo": "XiaomiRobotics/Xiaomi-Robotics-1-RoboCasa",
+      "hf_revision": "82b7c2210c1a39fca4a87e681cffbbed134ccde0",
+      "hf_revision_url": "https://huggingface.co/XiaomiRobotics/Xiaomi-Robotics-1-RoboCasa/tree/82b7c2210c1a39fca4a87e681cffbbed134ccde0",
+      "source_commit": "0dd7aef8dc87296246aae812a1f59ccb708e5546",
+      "source_feature_sha256": "075503a357e76bc71df607d7002728fa5584102a08845237ecd344da16452e63",
+      "extraction_manifest_file_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "extraction_batch_size": 2,
+      "contract_id": "087e79d454b8444ebf88378aef61c8cfe2bda411d8cb58c2c8e58fcf3b99bae2",
+      "representation": "Xiaomi Robotics-1 VLM cognition output",
+      "input_contract": "official RoboCasa evaluator prompt; current left/right/wrist RGB; 0.95 center crop; 7 joint + first gripper qpos padded to 60",
+      "comparison_limit": "same anchors/descriptions/labels/splits; Xiaomi uses its native current-frame evaluator contract and joint+gripper state",
+      "runtime_versions": {
+        "torch": "2.10.0a0+b558c986e8.nv25.11",
+        "transformers": "4.57.1",
+        "accelerate": "1.12.0",
+        "safetensors": "0.6.2",
+        "numpy": "2.5.3",
+        "Pillow": "12.0.0",
+        "opencv-python-headless": "4.11.0.86"
+      },
+      "shape": [
+        7200,
+        2560
+      ],
+      "feature": "vlm_cognition"
+    },
+    "dit_kv_l36": {
+      "model": "Xiaomi Robotics-1 RoboCasa",
+      "hf_repo": "XiaomiRobotics/Xiaomi-Robotics-1-RoboCasa",
+      "hf_revision": "82b7c2210c1a39fca4a87e681cffbbed134ccde0",
+      "hf_revision_url": "https://huggingface.co/XiaomiRobotics/Xiaomi-Robotics-1-RoboCasa/tree/82b7c2210c1a39fca4a87e681cffbbed134ccde0",
+      "source_commit": "0dd7aef8dc87296246aae812a1f59ccb708e5546",
+      "source_feature_sha256": "337a4922db3691a7f8452dd7774387b12c8b4838ffbf751eff5e4b6973c4f770",
+      "extraction_manifest_file_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "extraction_batch_size": 30,
+      "contract_id": "3e7c6f7d9f3aa4905273e032f0e5df4d29b89a5bff33aec72845434ff6b04f0f",
+      "representation": "VLM key/value conditioning read by DiT layer 36; valid-token mean over flattened heads, concatenated K and V",
+      "input_contract": "official RoboCasa evaluator prompt; current left/right/wrist RGB; 0.95 center crop; 7 joint + first gripper qpos padded to 60",
+      "comparison_limit": "same anchors/descriptions/labels/splits; Xiaomi uses its native current-frame evaluator contract and joint+gripper state",
+      "runtime_versions": {
+        "torch": "2.10.0a0+b558c986e8.nv25.11",
+        "transformers": "4.57.1",
+        "accelerate": "1.12.0",
+        "safetensors": "0.6.2",
+        "numpy": "2.5.3",
+        "Pillow": "12.0.0",
+        "opencv-python-headless": "4.11.0.86"
+      },
+      "bridge_readout": "all 36 native DiT conditioning KV pairs; valid-token mean of flattened heads separately for K and V, concatenated only for same-metric downstream probes",
+      "shape": [
+        7200,
+        2048
+      ],
+      "feature": "dit_kv_l36"
+    }
+  },
+  "notes": [
+    "Frozen representation t-SNE; no policy training or simulator evaluation."
+  ]
+}

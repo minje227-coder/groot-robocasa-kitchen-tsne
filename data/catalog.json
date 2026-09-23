@@ -234,6 +234,39 @@
         "state_masked",
         "action_masked"
       ]
+    },
+    {
+      "id": "n16_official_robocasa_bridge",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "N1.6 Official 3B",
+      "path": "runs/n16_official_robocasa_bridge",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "raw",
+        "processed"
+      ]
+    },
+    {
+      "id": "rldx1_ft_robocasa_bridge",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "RLDX-1 FT RoboCasa",
+      "path": "runs/rldx1_ft_robocasa_bridge",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "pre_vlln",
+        "post_vlln"
+      ]
+    },
+    {
+      "id": "xiaomi_r1_robocasa_bridge",
+      "family": "RoboCasa-Kitchen Ckpt",
+      "label": "Xiaomi Robotics-1 RoboCasa",
+      "path": "runs/xiaomi_r1_robocasa_bridge",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "vlm_cognition",
+        "dit_kv_l36"
+      ]
     }
   ]
 }
