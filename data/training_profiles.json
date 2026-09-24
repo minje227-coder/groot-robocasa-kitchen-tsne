@@ -1467,6 +1467,56 @@
         "preprocessing": "constant-filter -> centered PCA<=50 without per-dimension scaling -> t-SNE",
         "action_temperature": 0.3
       }
+    },
+    "n15_combined_run1_task_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Objective",
+          "Task loss"
+        ],
+        [
+          "Published feature",
+          "N1.5 Processed H"
+        ],
+        [
+          "Probe",
+          "24 tasks / 240 episodes / 7,200 points from training dataset"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint contract and frozen feature cache",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_Combined_run1_task_BS64_60K_20260924/checkpoint-60000"
+      ]
+    },
+    "n15_combined_run2_task_state_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Objective",
+          "Task + State loss"
+        ],
+        [
+          "Published feature",
+          "N1.5 Processed H"
+        ],
+        [
+          "Probe",
+          "24 tasks / 240 episodes / 7,200 points from training dataset"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint contract and frozen feature cache",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_Combined_run2_task_state_BS64_60K_20260924/checkpoint-60000"
+      ]
     }
   }
 }
