@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "id": "n15_state_rotation_d256_060000",
+  "label": "Rotation+State256 60K (N1.5)",
+  "family": "N1.5 Intent/Motion",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "processed"
+  ],
+  "points_files": {
+    "processed": "points_processed.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "processed": {
+      "status": "complete",
+      "mode": "rotation",
+      "checkpoint": "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_StateOnly_RotationSplit_D256_BS64_60K_20260925/checkpoint-60000",
+      "step": 60000,
+      "sample_count": 7200,
+      "episodes": 240,
+      "manifest": "/home/work/workspace/test/seonho/groot-robocasa-kitchen-tsne/data/official_manifest.json",
+      "manifest_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "video_backend": "opencv",
+      "pooling": "float32 mean over valid Processed-H tokens",
+      "checkpoint_contract_sha256": "fc31aa9c38cf36bbde548a3e05fa3dba97e997595d44febee0b9d1e81a791fd4",
+      "checkpoint_trainer_sha256": "f2c2021d502358d149892462243ea605633812d6de91024c686ca077476e0b77",
+      "checkpoint_index_sha256": "97bba9174ade8d64b535a333ff84cfa7de227e59a9386e0ed19a06598d44c6e9",
+      "feature_sha256": "98f298063fb62042b8285a8f5afd99648ea07780fe2db92c6e0e04fbb2bd24c3",
+      "extractor_sha256": "e3db08d5f2c14e893d5e5464b89f5d4b1ada3e3191d306ae2af7196cde01db3b",
+      "runtime_patch_sha256": "325f36b48921b3d7a6619e920cb0847cb732ea620f7057440e4e19e2be2e1ad2",
+      "validation": {
+        "orthogonality_error": 4.5299530029296875e-06,
+        "teacher_max_abs_error": 0.0,
+        "subspace_capture_max_abs_error": 0.0,
+        "policy_capture_max_abs_error": 0.0,
+        "rotation_applied_before_pooling": true,
+        "projection_policy_tokens_unchanged": false,
+        "state_rkd_contract_equal_run2": true,
+        "state_statistics_equal_run2": true
+      },
+      "extracted_feature_sha256": {
+        "H_policy": "98f298063fb62042b8285a8f5afd99648ea07780fe2db92c6e0e04fbb2bd24c3",
+        "H_stock": "13a0d79093f6ba33d0508e6a3f322c338b07acc56c208dcf9ec91d10948c6947",
+        "Z_state": "805322416fdf090881bbd8892b6f1919589c16221cd7e3715e5788e3f9f5d9fa",
+        "H_free": "3a566ef0dd83c3637cb435b642783900629ad7b44757fa4950554be56cd1bde3",
+        "teacher": "5bf285ecc1248ee36002e275d4b96a971673430a36b40d551c463d3cfdb9ca10"
+      },
+      "feature_cache": "/home/work/workspace/test/seonho/analysis/n15_state_subspace_geometry_20260926/rotation_H_policy.npy",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "representation": "N1.5 whole policy-visible rotated Processed-H (H @ Q), float32 valid-token mean",
+      "shape": [
+        7200,
+        2048
+      ],
+      "feature": "processed",
+      "extraction_manifest_file_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "published_checkpoint_config_sha256": "baa568ee38ee44de899588e60b030540a9fdb29cbdb168121ba325711f994b61",
+      "published_checkpoint_index_sha256": "97bba9174ade8d64b535a333ff84cfa7de227e59a9386e0ed19a06598d44c6e9"
+    }
+  },
+  "notes": [
+    "Frozen 60K representation t-SNE on canonical 300-demo probe; not unseen-episode generalization.",
+    "Published view uses the entire 2048D policy conditioning representation."
+  ]
+}

@@ -288,6 +288,26 @@
       "features": [
         "processed"
       ]
+    },
+    {
+      "id": "n15_combined_run3_task_action_060000",
+      "family": "N1.5 Intent/Motion",
+      "label": "Run3 Task+Action 60K (N1.5)",
+      "path": "runs/n15_combined_run3_task_action_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
+    },
+    {
+      "id": "n15_state_rotation_d256_060000",
+      "family": "N1.5 Intent/Motion",
+      "label": "Rotation+State256 60K (N1.5)",
+      "path": "runs/n15_state_rotation_d256_060000",
+      "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+      "features": [
+        "processed"
+      ]
     }
   ]
 }

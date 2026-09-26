@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "id": "n15_combined_run3_task_action_060000",
+  "label": "Run3 Task+Action 60K (N1.5)",
+  "family": "N1.5 Intent/Motion",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "processed"
+  ],
+  "points_files": {
+    "processed": "points_processed.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "processed": {
+      "status": "complete",
+      "run": "run3",
+      "checkpoint": "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_Combined_run3_task_action_BS64_60K_20260924/checkpoint-60000",
+      "step": 60000,
+      "manifest": "/home/work/workspace/test/seonho/groot-robocasa-kitchen-tsne/data/official_manifest.json",
+      "manifest_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "checkpoint_config_sha256": "840f44077631c9ac41ed8d0b81a286cb6b9e4945788573f75f4321caa89f8a2e",
+      "checkpoint_contract_sha256": "0988fc468ebb87164b3e6a2794c0ea1b2fd53f4e866e16023b56348ea66928b2",
+      "checkpoint_trainer_sha256": "160643b9e8fd04fac019cf6852f86aebdf06d176512c67d2caed8d8ff55ca40d",
+      "extractor_sha256": "88054746deb67409efa88afa9a572efe4919a2c058dca816eecb04fa943cfc49",
+      "video_backend": "opencv",
+      "sample_count": 7200,
+      "pooling": "float32 mean over valid Processed-H tokens",
+      "feature_sha256": "5d02942ef02c4638f97f42331b1f0c2f6a3722d0bce696d84176352a8f6e93a1",
+      "feature_cache": "/home/work/workspace/test/seonho/analysis/n15_combined_run3_60k_rep_audit_20260925/run3_H.npy",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "representation": "N1.5 native Processed-H, float32 valid-token mean",
+      "shape": [
+        7200,
+        2048
+      ],
+      "feature": "processed",
+      "extraction_manifest_file_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "published_checkpoint_config_sha256": "840f44077631c9ac41ed8d0b81a286cb6b9e4945788573f75f4321caa89f8a2e",
+      "published_checkpoint_index_sha256": "f026cdc3854ad62c48e265b924576dfdc6b2c70950ee165f94b16946db1c5939"
+    }
+  },
+  "notes": [
+    "Frozen 60K representation t-SNE on canonical 300-demo probe; not unseen-episode generalization.",
+    "Published view uses the entire 2048D policy conditioning representation."
+  ]
+}
