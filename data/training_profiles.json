@@ -1567,6 +1567,64 @@
       "sources": [
         "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_StateOnly_RotationSplit_D256_BS64_60K_20260925/checkpoint-60000"
       ]
+    },
+    "n15_rotation_action_a256_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Objective",
+          "FM + 0.5 Action RKD on rotated dims 256:512; State/Task disabled"
+        ],
+        [
+          "Published feature",
+          "N1.5 whole policy-visible rotated Processed-H (H @ Q), float32 valid-token mean"
+        ],
+        [
+          "Sheet column",
+          "O"
+        ],
+        [
+          "Probe",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint contract and frozen feature cache",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_ActionOnly_RotationSplit_A256_BS64_60K_20260927/checkpoint-60000"
+      ]
+    },
+    "n15_rotation_state_action_s256_a256_060000": {
+      "facts": [
+        [
+          "Checkpoint",
+          "60,000"
+        ],
+        [
+          "Objective",
+          "FM + 0.4 State RKD on rotated dims 0:256 + 0.5 Action RKD on dims 256:512; Task disabled"
+        ],
+        [
+          "Published feature",
+          "N1.5 whole policy-visible rotated Processed-H (H @ Q), float32 valid-token mean"
+        ],
+        [
+          "Sheet column",
+          "Q"
+        ],
+        [
+          "Probe",
+          "24 tasks / 240 episodes / 7,200 points"
+        ]
+      ],
+      "phases": [],
+      "source_label": "checkpoint contract and frozen feature cache",
+      "sources": [
+        "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_StateAction_RotationSplit_S256_A256_BS64_60K_20260927/checkpoint-60000"
+      ]
     }
   }
 }

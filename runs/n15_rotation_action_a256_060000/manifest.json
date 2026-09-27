@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "n15_rotation_action_a256_060000",
+  "label": "Rotation+Action256 60K (N1.5)",
+  "family": "N1.5 Intent/Motion",
+  "manifest_id": "kitchen_24task_ep10_desc3_seed42_frame30_v1",
+  "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+  "features": [
+    "processed"
+  ],
+  "points_files": {
+    "processed": "points_processed.json"
+  },
+  "sequences_file": "../../data/sequences.json",
+  "fps": 20,
+  "source": {
+    "processed": {
+      "status": "complete",
+      "mode": "action",
+      "checkpoint": "/home/work/workspace/test/seonho/groot_robocasa-kitchen/train_ckpt/n15/N15_RoboCasa_ActionOnly_RotationSplit_A256_BS64_60K_20260927/checkpoint-60000",
+      "step": 60000,
+      "sample_count": 7200,
+      "episodes": 240,
+      "manifest_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "feature_sha256": "b55c69c0454d411fa1b9f222e26b05e688bbaa57d420234046190f9a21311933",
+      "checkpoint_contract_sha256": "9be403657a4177d105ac84bf59144b343c7c2d512af0f5fa015cbd8f88947035",
+      "checkpoint_index_sha256": "5fdafee330ce1c6585ef8c6aff16f833705a7037e1ce5c7d09a7844908d14a4e",
+      "extractor_sha256": "689a84cb94f5d628f020cd49ed2233eb4683f65e59beb915e2e9fd0884d16198",
+      "runtime": {
+        "variant": "rotation_split",
+        "future_token_mode": "zero_length",
+        "is_directq": false,
+        "subspace_mode": "rotation",
+        "subspace_dim": 256,
+        "state_slice": [
+          0,
+          256
+        ],
+        "action_slice": [
+          256,
+          512
+        ]
+      },
+      "validation": {
+        "orthogonality_error": 3.5762786865234375e-06,
+        "teacher_max_error": 0.0,
+        "rotation_capture_error": 0.0,
+        "all_points_written": true
+      },
+      "extracted_feature_sha256": {
+        "H_policy": "b55c69c0454d411fa1b9f222e26b05e688bbaa57d420234046190f9a21311933",
+        "Z_state": "1a35b74a24ac29771e5ca164543bedf3a998f0a0c88e9c30495a9f11ffe0c620",
+        "Z_action": "5900f1121119f76ce0446e4b2f843144ee2707e9d169d9c47146eca6357a2fc0"
+      },
+      "feature_cache": "/home/work/workspace/test/seonho/analysis/n15_cross_task_state_20260927/action_H_policy.npy",
+      "source_manifest_sha256": "8087bf4893ea0e3a6326a0c406ef15ebf5fed0d6fe22aab86fdf344eff3fc02f",
+      "extraction_manifest_file_sha256": "1ce3d151989013fe11386b8e6ce3cbeee4fee3e771416dc81a1b230ae2a572fb",
+      "checkpoint_config_sha256": "8313dcb4161c36027798fecbe545c620d81aad68cab6aa03e3a803486390a99e",
+      "checkpoint_trainer_sha256": "0561f610d715282db3e770cf0cf7a09394d35c2a150c2c203cf8cf2bafa29474",
+      "shape": [
+        7200,
+        2048
+      ],
+      "feature": "processed",
+      "sheet_column": "O",
+      "representation": "N1.5 whole policy-visible rotated Processed-H (H @ Q), float32 valid-token mean"
+    }
+  },
+  "notes": [
+    "Whole 2048D policy-visible H; canonical frozen 300-demo probe."
+  ]
+}
